@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2023/11/11 15:34:43 by btan             ###   ########.fr        #
+#    Updated: 2023/11/11 18:07:35 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,16 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
+MLXFLAGS = -lmlx -lXext -lX11
+
 OBJECTS = $(SRCS:.c=.o)
 
 all: $(NAME) 
 
-.c.o:
-	$(CC) -c $< -o $(<:.c=.o)
+#.c.o:
+#	$(CC) -c $< -o $(<:.c=.o)
+%.o: %.c
+	$(CC) $(CFLAGS) $(MLXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJECTS)
 	ar -rc $(NAME) $(OBJECTS)
@@ -37,7 +41,7 @@ fclean: clean
 re: fclean all
 
 test:
-	$(CC) tests/main.c -L -l $(NAME)
+	$(CC) main.c -L -l $(NAME)
 run:
 	clear && ./a.out
 tester:
