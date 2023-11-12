@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2023/11/11 22:09:34 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/12 16:41:37 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,20 @@ typedef struct window_size {
 	int	height;
 }	t_window;
 
-int	close(int key, void *mlx_ptr, void *window)
+int	handle_keydown(int key, void *mlx_ptr, void *window)
+{
+	//printf("%d\n", key);
+	if (key == 65307)
+		return (mlx_destroy_window(mlx_ptr, window));
+	return (0);
+}
+
+int	handle_mouse(int key, void *mlx_ptr, void *window)
 {
 	printf("%d\n", key);
-	if (key == 65307)
-		mlx_destroy_window(mlx_ptr, window);
-	return (1);
+	//if (key == 65307)
+	//	return (mlx_destroy_window(mlx_ptr, window));
+	return (0);
 }
 
 int	main(void)
@@ -36,6 +44,7 @@ int	main(void)
 	window.width = 1024;
 	window.height = 512;
 	window.ptr = mlx_new_window(mlx_ptr, window.width, window.height, "FDF");
-	mlx_hook(window.ptr, 2, 1L << 0, close, mlx_ptr);
+	mlx_hook(window.ptr, 2, 1L << 0, handle_keydown, mlx_ptr);
+	mlx_hook(window.ptr, 6, 1L << 6, handle_mouse, mlx_ptr);
 	mlx_loop(mlx_ptr);
 }
