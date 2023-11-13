@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2023/11/13 19:37:41 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/13 19:56:58 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int	main(void)
 	mlx_hook(window.ptr, 6, 1L << 6, handle_mouse, mlx_ptr);
 	mlx_hook(window.ptr, 17, 0L, handle_close, mlx_ptr);
 //	handle_events(mlx_ptr, &window);
+	mlx_string_put(mlx_ptr, window.ptr, window.width * 0.05, window.height / 2, 0xffffff, "Test");
 	mlx_loop(mlx_ptr);
 }
