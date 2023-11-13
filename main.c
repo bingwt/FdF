@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2023/11/13 19:56:58 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/13 23:59:10 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 int	main(void)
 {
-	void	*mlx_ptr;
-	t_window	window;
+	t_props	props;
 
-	mlx_ptr = mlx_init();
-	window.width = 1024;
-	window.height = 512;
-	window.ptr = mlx_new_window(mlx_ptr, window.width, window.height, "FDF");
-	mlx_hook(window.ptr, 2, 1L << 0, handle_keydown, mlx_ptr);
+	props.mlx = mlx_init();
+	props.width = 1024;
+	props.height = 512;
+	props.window = mlx_new_window(props.mlx, props.width, props.height, "FDF");
+	props.help = 0;
+	//mlx_hook(props.window, 2, 1L << 0, handle_keydown, &props);
 //	mlx_hook(window.ptr, 4, 1L << 2, handle_button, mlx_ptr);
-	mlx_hook(window.ptr, 6, 1L << 6, handle_mouse, mlx_ptr);
-	mlx_hook(window.ptr, 17, 0L, handle_close, mlx_ptr);
-//	handle_events(mlx_ptr, &window);
-	mlx_string_put(mlx_ptr, window.ptr, window.width * 0.05, window.height / 2, 0xffffff, "Test");
-	mlx_loop(mlx_ptr);
+	//mlx_hook(props.window, 6, 1L << 6, handle_mouse, props.mlx);
+	//mlx_hook(props.window, 17, 0L, handle_close, &props);
+	handle_events(&props);
+	mlx_loop(props.mlx);
 }
