@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2023/11/11 22:11:16 by btan             ###   ########.fr        #
+#    Updated: 2023/11/13 19:18:01 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ fclean: clean
 re: fclean all
 
 test:
-	cc main.c -Imlx -Lmlx -lmlx -lXext -lX11 -g
+	cc main.c events.c -Imlx -Lmlx -lmlx -lXext -lX11 -g
 run:
 	clear && ./a.out
 tester:
