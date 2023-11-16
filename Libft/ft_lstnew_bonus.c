@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2023/11/14 23:18:37 by btan             ###   ########.fr       */
+/*   Created: 2023/09/13 16:29:34 by btan              #+#    #+#             */
+/*   Updated: 2023/09/15 22:50:07 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <mlx.h>
-#include <libft.h>
+#include "libft.h"
 
-typedef struct properties {
-	void	*mlx;
-	void	*window;
-	int	width;
-	int	height;
-	int	help;
-}	t_props;
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*node;
 
-int	handle_keydown(int key, t_props *props);
-int	handle_mouse(int x, int y, void *mlx_ptr, void *window);
-int	handle_close(int key, t_props *props);
-int	handle_events(t_props *props);
+	node = malloc(sizeof(t_list));
+	if (!node)
+		return (NULL);
+	(*node).content = content;
+	(*node).next = NULL;
+	return (node);
+}

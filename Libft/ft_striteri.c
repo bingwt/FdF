@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2023/11/14 23:18:37 by btan             ###   ########.fr       */
+/*   Created: 2023/09/13 14:42:38 by btan              #+#    #+#             */
+/*   Updated: 2023/09/15 17:14:56 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <mlx.h>
-#include <libft.h>
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	int	i;
 
-typedef struct properties {
-	void	*mlx;
-	void	*window;
-	int	width;
-	int	height;
-	int	help;
-}	t_props;
-
-int	handle_keydown(int key, t_props *props);
-int	handle_mouse(int x, int y, void *mlx_ptr, void *window);
-int	handle_close(int key, t_props *props);
-int	handle_events(t_props *props);
+	i = 0;
+	while (*s)
+		f(i++, s++);
+}

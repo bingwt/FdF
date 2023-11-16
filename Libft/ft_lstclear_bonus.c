@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2023/11/14 23:18:37 by btan             ###   ########.fr       */
+/*   Created: 2023/09/15 17:36:06 by btan              #+#    #+#             */
+/*   Updated: 2023/09/15 22:46:30 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <mlx.h>
-#include <libft.h>
+#include "libft.h"
 
-typedef struct properties {
-	void	*mlx;
-	void	*window;
-	int	width;
-	int	height;
-	int	help;
-}	t_props;
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*next;
 
-int	handle_keydown(int key, t_props *props);
-int	handle_mouse(int x, int y, void *mlx_ptr, void *window);
-int	handle_close(int key, t_props *props);
-int	handle_events(t_props *props);
+	while (*lst)
+	{
+		next = (**lst).next;
+		del((**lst).content);
+		free(*lst);
+		*lst = next;
+	}
+}

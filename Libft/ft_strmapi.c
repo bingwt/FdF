@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2023/11/14 23:18:37 by btan             ###   ########.fr       */
+/*   Created: 2023/09/13 14:08:03 by btan              #+#    #+#             */
+/*   Updated: 2023/09/15 17:14:13 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <mlx.h>
-#include <libft.h>
+#include "libft.h"
 
-typedef struct properties {
-	void	*mlx;
-	void	*window;
-	int	width;
-	int	height;
-	int	help;
-}	t_props;
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char	*str;
+	int		i;
 
-int	handle_keydown(int key, t_props *props);
-int	handle_mouse(int x, int y, void *mlx_ptr, void *window);
-int	handle_close(int key, t_props *props);
-int	handle_events(t_props *props);
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (s[i])
+	{
+		str[i] = f(i, s[i]);
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}

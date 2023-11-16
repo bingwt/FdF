@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2023/11/13 19:18:01 by btan             ###   ########.fr        #
+#    Updated: 2023/11/16 15:22:55 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) $(MLXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJECTS)
+	make -C Libft
 	ar -rc $(NAME) $(OBJECTS)
 
 clean:
@@ -40,8 +41,10 @@ fclean: clean
 
 re: fclean all
 
+gnl:
+	cc test_gnl.c -ILibft -LLibft -l:libft.a -g
 test:
-	cc main.c events.c -Imlx -Lmlx -lmlx -lXext -lX11 -g
+	cc main.c events.c -Imlx -Lmlx -lmlx -ILibft -LLibft -l:libft.a -lXext -lX11 -g
 run:
 	clear && ./a.out
 tester:
