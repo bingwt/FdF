@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2023/11/18 14:36:05 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/18 16:25:23 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	handle_keydown(int key, t_props *props)
 {
+	char	*image;
 	//printf("%d\n", key);
 	if (key == 65307)
 		//mlx_destroy_window((*props).mlx, (*props).window);
@@ -39,8 +40,9 @@ int	handle_keydown(int key, t_props *props)
 	if (key == 100)
 	{
 		printf("Test");
-		mlx_string_put((*props).mlx, (*props).image, (*props).width * 0.05, (*props).height / 2 + 14, 0xffffff, "Toggle help: h");
-		mlx_put_image_to_window((*props).mlx, (*props).window, (*props).image, 0, 0);
+		image = mlx_get_data_addr((*props).image, int *bits_per_pixel, int *size_line, int *endian );
+		//mlx_string_put((*props).mlx, (*props).image, (*props).width * 0.05, (*props).height / 2 + 14, 0xffffff, "Toggle help: h");
+		//mlx_put_image_to_window((*props).mlx, (*props).window, (*props).image, 0, 0);
 	}
 	return (0);
 }
