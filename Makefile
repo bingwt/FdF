@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2023/11/16 15:22:55 by btan             ###   ########.fr        #
+#    Updated: 2023/11/17 12:50:11 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,16 @@ re: fclean all
 
 gnl:
 	cc test_gnl.c -ILibft -LLibft -l:libft.a -g
-test:
-	cc main.c events.c -Imlx -Lmlx -lmlx -ILibft -LLibft -l:libft.a -lXext -lX11 -g
+test-make:
+	make -C Libft
+	mv ./Libft/libft.a ./
+	make -C mlx
+	mv ./mlx/libmlx_Linux.a ./mlx.a
+	make fclean -C Libft
+	make clean -C mlx
+test: test-make
+	cc main.c events.c -Imlx -ILibft libft.a mlx.a -lX11 -lXext
+	#cc main.c events.c -Imlx -Lmlx -lmlx -ILibft -LLibft -l:libft.a -lXext -lX11 -g
 run:
 	clear && ./a.out
 tester:

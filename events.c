@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2023/11/16 15:30:10 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/18 14:36:05 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	handle_keydown(int key, t_props *props)
 {
-	printf("%d\n", key);
+	//printf("%d\n", key);
 	if (key == 65307)
 		//mlx_destroy_window((*props).mlx, (*props).window);
 		handle_close(key, props);
-	else if (key == 104)
+	if (key == 104)
 	{
 		(*props).help = !(*props).help;
 		if ((*props).help)
@@ -36,9 +36,11 @@ int	handle_keydown(int key, t_props *props)
 			mlx_string_put((*props).mlx, (*props).window, (*props).width * 0.05, (*props).height / 2 + 28, 0x000000, "Quit: ESC");
 		}
 	}
-	else if (key == 100)
+	if (key == 100)
 	{
-		//char *image = mlx_new_image((*props).mlx, *(props).width, (*props).height);
+		printf("Test");
+		mlx_string_put((*props).mlx, (*props).image, (*props).width * 0.05, (*props).height / 2 + 14, 0xffffff, "Toggle help: h");
+		mlx_put_image_to_window((*props).mlx, (*props).window, (*props).image, 0, 0);
 	}
 	return (0);
 }

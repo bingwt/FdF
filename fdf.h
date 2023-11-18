@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2023/11/14 23:18:37 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/18 14:24:01 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 typedef struct properties {
 	void	*mlx;
 	void	*window;
+	void	*image;
 	int	width;
 	int	height;
 	int	help;
