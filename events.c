@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2023/11/18 16:25:23 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/24 15:16:36 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ int	handle_keydown(int key, t_props *props)
 //
 int	handle_close(int key, t_props *props)
 {
+	free((*props).mlx);
+	free((*props).window);
+	free((*props).image);
+	free(*props);
 	exit(0);
 }
 
