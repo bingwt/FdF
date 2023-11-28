@@ -6,7 +6,7 @@
 /*   By: btan <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/10 23:04:57 by btan              #+#    #+#             */
-/*   Updated: 2023/11/11 15:02:19 by btan             ###   ########.fr       */
+/*   Updated: 2023/11/27 10:36:42 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,25 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	if (!s)
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *) s;
+	if (!ptr)
 		return (NULL);
-	while (*s)
-	if (*(s++) == c)
-		return ((char *) s - 1);
+	while (*ptr != (char) c && *ptr)
+		ptr++;
+	if (*ptr == (char) c)
+		return ((char *) ptr);
 	return (NULL);
 }
+//{
+//	if (!s)
+//		return (NULL);
+//	while (*s)
+//	if (*(s++) == c)
+//		return ((char *) s - 1);
+//	return (NULL);
+//}
 /*
 #include <string.h>
 #include <stdio.h>
