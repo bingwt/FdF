@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/01 22:18:01 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/03 20:01:23 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	handle_keydown(int key, t_props *props)
 {
 	char	*image;
-	//printf("%d\n", key);
+	printf("%d\n", key);
 	if (key == 65307)
 		//mlx_destroy_window((*props).mlx, (*props).window);
 		handle_close(key, props);
@@ -44,6 +44,10 @@ int	handle_keydown(int key, t_props *props)
 		//mlx_string_put((*props).mlx, (*props).image, (*props).width * 0.05, (*props).height / 2 + 14, 0xffffff, "Toggle help: h");
 		//mlx_put_image_to_window((*props).mlx, (*props).window, (*props).image, 0, 0);
 	}
+	if (key == 65361)
+		draw_pixel(pixel, props, props.img);
+
+		mlx_put_image_to_window(props.mlx, props.window, props.image, 0, 0);
 	return (0);
 }
 //

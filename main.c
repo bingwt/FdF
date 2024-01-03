@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/01 22:48:27 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/03 17:24:45 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	props.mlx = mlx_init();
 	props.width = 1920;
 	props.height = 1080;
-	props.window = mlx_new_window(props.mlx, props.width, props.height, "FDF");
+	props.window = mlx_new_window(props.mlx, props.width, props.height, "FdF");
 	//props.image = mlx_new_image(props.mlx, props.width, props.height);
 	props.help = 0;
 	//mlx_hook(props.window, 2, 1L << 0, handle_keydown, &props);
