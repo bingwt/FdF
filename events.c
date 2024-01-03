@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/03 20:01:23 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/04 00:29:28 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,22 @@ int	handle_keydown(int key, t_props *props)
 		//mlx_string_put((*props).mlx, (*props).image, (*props).width * 0.05, (*props).height / 2 + 14, 0xffffff, "Toggle help: h");
 		//mlx_put_image_to_window((*props).mlx, (*props).window, (*props).image, 0, 0);
 	}
-	if (key == 65361)
-		draw_pixel(pixel, props, props.img);
-
-		mlx_put_image_to_window(props.mlx, props.window, props.image, 0, 0);
+	if (key == 65361 || key == 65362 || key == 65363 || key ==65364)
+	{
+		if (key == 65361)
+			(*props).pixel.x--;
+		if (key == 65362)
+			(*props).pixel.y--;
+		if (key == 65363)
+			(*props).pixel.x++;
+		if (key == 65364)
+			(*props).pixel.y++;
+		mlx_destroy_image((*props).mlx, (*props).image);
+		(*props).image = mlx_new_image((*props).mlx, (*props).width, (*props).height);
+		draw_pixel((*props).pixel.x, (*props).pixel.y, (*props));
+		draw_pixel((*props).pixel.x + 5, (*props).pixel.y + 5, (*props));
+		mlx_put_image_to_window((*props).mlx, (*props).window, (*props).image, 0, 0);
+	}
 	return (0);
 }
 //
