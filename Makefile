@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2024/01/04 00:56:03 by btan             ###   ########.fr        #
+#    Updated: 2024/01/04 14:16:55 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,8 +51,10 @@ test-make:
 	make fclean -C Libft
 	make clean -C mlx
 test: test-make
-	cc main.c events.c draw.c -I. -Imlx -ILibft libft.a mlx.a -lX11 -lXext -g
+	cc main.c events.c draw.c fdf_utils.c -I. -Imlx -ILibft libft.a mlx.a -lX11 -lXext -g
 	#cc main.c events.c -Imlx -Lmlx -lmlx -ILibft -LLibft -l:libft.a -lXext -lX11 -g
+test-720: test-make
+	cc main.c events.c draw.c fdf_utils.c -I. -Imlx -ILibft libft.a mlx.a -lX11 -lXext -D WIDTH=1280 -D HEIGHT=720 -g
 run:
 	clear && ./a.out
 tester:
