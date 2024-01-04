@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/04 14:14:05 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/04 23:39:45 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv)
 	t_map	map;
 	int		fd;
 	t_props	props;
+	t_line	line;
 
 	if (argc != 2)
 	{
@@ -38,17 +39,24 @@ int	main(int argc, char **argv)
 	props.pixel.y = props.height / 2;
 	props.pixel.color = 0xFFFFFFFF;
 	
-	
-	//draw_pixel(props.pixel.x, props.pixel.y, props);
-	//draw_pixel(--props.width, 0, props);
-	//fill_pixels(props);
-	draw_line(0, 0, props.width - 1, props.height - 1, props);
-
-	mlx_put_image_to_window(props.mlx, props.window, props.image, 0, 0);
-	//mlx_destroy_image(props.mlx, props.image);
-	//props.image = mlx_new_image(props.mlx, props.width, props.height);
-	//draw_pixel(10, 10, pixel, props);
-	//mlx_put_image_to_window(props.mlx, props.window, props.image, 0, 0);
+	line.x0 = 0;
+	line.y0 = 0;
+	line.x1 = props.width - 1;
+	line.y1 = props.height - 1;
+	render_line("aa", line, props);
+	line.x0 = 0;
+	line.y0 = props.height - 1;
+	line.x1 = props.width - 1;
+	line.y1 = 0;
+	render_line("aa", line, props);
+	//line.x0 = 0;
+	//line.x1 = props.width - 1;
+	//line.y0 = 339;
+	//while (++line.y0 < 378)
+	//{
+	//	line.y1 = line.y0;
+	//	render_line("aa", line, props);
+	//}
 	
 	handle_events(&props);
 	mlx_loop(props.mlx);

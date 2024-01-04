@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/04 03:08:10 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/04 22:04:34 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,66 @@ void	fill_pixels(t_props props)
 	}
 }
 
-void	draw_line(int x0, int y0, int x1, int y1, t_props props)
+void	draw_bresenham(t_line line, t_props props)
 {
 	int	dx;
 	int	dy;
-	int	D;
+	int	d;
 	int	x;
-	int	y; 
+	int	y;
 
-	dx = x1 - x0;
-	dy = y1 - y0;
-	D = 2*dy - dx;
-	x = x0;
-	y = y0;
-
-	while (x <= x1)
+	dx = line.x1 - line.x0;
+	dy = line.y1 - line.y0;
+	d = 2 * dy - dx;
+	x = line.x0;
+	y = line.y0;
+	while (x <= line.x1)
 	{
 		draw_pixel(x, y, props);
-		if (D > 0)
+		if (d > 0)
 		{
 			y = y + 1;
-			D = D - 2*dx;
+			d = d - 2 * dx;
 		}
-		D = D + 2*dy;
+		d = d + 2 * dy;
 		x++;
+	}
+}
+
+static void	ft_swap(float *a, float *b)
+{
+	float	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+void	draw_xiaolin_wu(t_line line, t_props props)
+{
+	float	dx;
+	float	dy;
+	float	gradient;
+	float	x;
+	float	y;
+
+	if (ABS(line.y1 - line.y0) > ABS(line.x1 - line.x0))
+	{
+		ft_swap(&line.x0, &line.y0);
+		ft_swap(&line.x1, &line.y1);
+	}
+	if (line.x0 > line.x1)
+	{
+		ft_swap(&line.x0, &line.x1);
+		ft_swap(&line.y0, &line.y1);
+	}
+	dx = line.x1 - line.x0;
+	dy = line.y1 - line.y0;
+	gradient = dy / dx;
+	y = line.y0 + gradient;
+	while (x++ < line.x1)
+	{
+		draw_pixel(x, y, props);
+		draw_pixel(x, (y += gradient) + 1, props);
 	}
 }

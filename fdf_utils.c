@@ -26,4 +26,5 @@ void	read_map(int fd, t_map *map)
 		(*map).rows++;
 	}
 	ft_printf("Rows: %d\n", (*map).rows);
+	ft_printf("Columns: %d\n");
 }
