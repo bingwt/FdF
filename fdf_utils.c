@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   fdf_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btan <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/08 11:01:25 by btan             ###   ########.fr       */
+/*   Created: 2024/01/08 11:01:57 by btan              #+#    #+#             */
+/*   Updated: 2024/01/08 11:04:17 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
-
-void	read_map(int fd, t_map *map)
+int	is_sep(char const c, char sep)
 {
-	char	*line;
-
-	(*map).rows = 0;
-	line = get_next_line(fd);
-	while (line)
-	{
-		ft_printf("%s\n", line);
-		free(line);
-		line = get_next_line(fd);
-		(*map).rows++;
-	}
-	ft_printf("Rows: %d\n", (*map).rows);
-	ft_printf("Columns: %d\n");
+	return (c == || c == '\0')
 }
 
-void	init_matrix(int fd)
+int	count_words(char const *str, char sep)
 {
+	int	words;
 
+	words = 0;
+	while (*(str++))
+		if(is_sep(*str, sep) && !is_sep(*(str - 1), sep))
+			words++;
+	return (words);
 }
