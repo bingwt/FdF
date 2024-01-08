@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/08 13:41:28 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/08 15:12:24 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	read_map(argv[1], &map);
-	init_matrix(&map);
+	init_matrix(argv[1], &map);
 	ft_printf("%s\n", map.matrix[0]);
 
 	props.mlx = mlx_init();

@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/08 13:36:22 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/08 15:38:32 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_map
 {
 	int		rows;
 	int		cols;
-	char	**matrix;
+	int		**matrix;
 }	t_map;
 
 typedef struct	s_data
@@ -78,7 +78,7 @@ int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
 
 void	read_map(char *file, t_map *map);
-void	init_matrix(t_map *map);
+void	init_matrix(char *file, t_map *map);
 
 void	draw_pixel(int x, int y, t_props props);
 void	fill_pixels(t_props props);
