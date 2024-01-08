@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/04 23:39:45 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/08 13:41:28 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ int	main(int argc, char **argv)
 		ft_printf("Please provide a map!\n");
 		return (1);
 	}
-	fd = open(argv[1], O_RDONLY);
-	read_map(fd, &map);
+	read_map(argv[1], &map);
+	init_matrix(&map);
+	ft_printf("%s\n", map.matrix[0]);
 
 	props.mlx = mlx_init();
 	props.width = WIDTH;
@@ -43,7 +44,7 @@ int	main(int argc, char **argv)
 	line.y0 = 0;
 	line.x1 = props.width - 1;
 	line.y1 = props.height - 1;
-	render_line("aa", line, props);
+	render_line("a", line, props);
 	line.x0 = 0;
 	line.y0 = props.height - 1;
 	line.x1 = props.width - 1;

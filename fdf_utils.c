@@ -6,13 +6,15 @@
 /*   By: btan <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:01:57 by btan              #+#    #+#             */
-/*   Updated: 2024/01/08 11:04:17 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/08 13:29:27 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fdf.h>
+
 int	is_sep(char const c, char sep)
 {
-	return (c == || c == '\0')
+	return (c == sep || c == '\0');
 }
 
 int	count_words(char const *str, char sep)
@@ -25,3 +27,4 @@ int	count_words(char const *str, char sep)
 			words++;
 	return (words);
 }
+

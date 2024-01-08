@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/04 22:07:05 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/08 13:36:22 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,21 @@ typedef struct s_properties
 
 typedef struct s_map
 {
-	int	rows;
+	int		rows;
+	int		cols;
+	char	**matrix;
 }	t_map;
 
-void	read_map(int fd, t_map *map);
+typedef struct	s_data
+{
+	t_map	map;
+}	t_data;
 
-int		handle_events(t_props *props);
+int		is_sep(char const c, char sep);
+int		count_words(char const *str, char sep);
+
+void	read_map(char *file, t_map *map);
+void	init_matrix(t_map *map);
 
 void	draw_pixel(int x, int y, t_props props);
 void	fill_pixels(t_props props);
@@ -77,5 +86,7 @@ void	draw_bresenham(t_line line, t_props props);
 void	draw_xiaolin_wu(t_line line, t_props props);
 
 void	render_line(char *algo, t_line line, t_props props);
+
+int		handle_events(t_props *props);
 
 #endif
