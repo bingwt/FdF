@@ -6,7 +6,7 @@
 /*   By: btan <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/08 15:39:50 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/09 11:25:01 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,22 @@ void	read_map(char *file, t_map *map)
 
 static int	*init_row(char *file, t_map *map)
 {
-	int		fd;
-	char	*line;
-	char	*ptr;
 	int		*row;
+	char	*line;
+	char	**split;
 	int		i;
 
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	row = ft_calloc(map->cols + 1, sizeof(int)); 
-	while (line)
+	i = 0;
+	row = ft_calloc(map->cols, sizeof(int));
+	line = get_next_line(open(file, O_RDONLY));
+	split = ft_split(line, ' ');
+	while (split[i])
 	{
-		ptr = line;
-		i = 0;
-		while (*line)
-		{
-			if (ft_isdigit(*line))
-				row[i++] = ft_atoi(line);
-			line++;
-		}
-		free(ptr);
-		line = get_next_line(fd);
+		row[i] = split[i];
+		free(split[i++]);
 	}
+	free(split);
+	free(line);
 	return (row);
 }
 
@@ -69,7 +63,7 @@ void	init_matrix(char *file, t_map *map)
 	int		i;
 
 	i = 0;
-	map->matrix = ft_calloc(map->rows + 1, sizeof(char *));
+	map->matrix = ft_calloc(map->rows, sizeof(int *));
 	while (i < map->rows)
 		map->matrix[i++] = init_row(file, map);
 }

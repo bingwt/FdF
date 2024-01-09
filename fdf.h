@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/08 16:23:30 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/09 11:25:40 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_map
 {
 	int		rows;
 	int		cols;
-	char	**matrix;
+	int		**matrix;
 }	t_map;
 
 typedef struct	s_data
