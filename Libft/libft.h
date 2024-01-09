@@ -6,7 +6,7 @@
 /*   By: btan <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:36:30 by btan              #+#    #+#             */
-/*   Updated: 2023/11/11 15:03:40 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/09 22:33:32 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,6 @@ void	ft_lstiter(t_list *lst, void (*f) (void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_printf(const char *str, ...);
 char	*get_next_line(int fd);
+void	free_strs(char **strs);
+
 #endif

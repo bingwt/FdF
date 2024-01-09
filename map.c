@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btan <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/09 11:25:01 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/09 22:46:07 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,23 @@ void	read_map(char *file, t_map *map)
 
 static int	*init_row(char *file, t_map *map)
 {
-	int		*row;
-	char	*line;
-	char	**split;
-	int		i;
+    int		fd;
+    int		*row;
+    char	*line;
+    char	**split;
+    int		i;
 
-	i = 0;
-	row = ft_calloc(map->cols, sizeof(int));
-	line = get_next_line(open(file, O_RDONLY));
-	split = ft_split(line, ' ');
-	while (split[i])
-	{
-		row[i] = split[i];
-		free(split[i++]);
-	}
-	free(split);
-	free(line);
-	return (row);
+    fd = open(file, O_RDONLY);
+    i = 0;
+    row = ft_calloc(map->cols, sizeof(int));
+    line = get_next_line(fd);
+    split = ft_split(line, ' ');
+    while (i < map->cols)
+        row[i] = ft_atoi(split[i++]);
+    free_strs(split);
+    free(line);
+    close(fd);
+    return (row);
 }
 
 void	init_matrix(char *file, t_map *map)
