@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 15:08:22 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 00:28:45 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@
 # ifndef SCALE
 #  define SCALE 0.8
 # endif
+
+typedef struct s_vec2
+{
+	int	x;
+	int	y;
+}	t_vec2;
+
+typedef struct s_vec3
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_vec3;
 
 typedef struct s_pixel
 {
@@ -82,8 +95,13 @@ typedef struct	s_data
 int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
 
+float	**vec3_to_matrix(t_vec3 *vec);
+float	**matrix_mult(float **a, float **b);
+// void	show_matrix(float **matrix);
+
 void	read_map(char *file, t_map *map);
 void	init_matrix(char *file, t_map *map);
+// void	init_matrix(char *file, t_map *map, t_vec3 **points);
 
 void	draw_pixel(int x, int y, t_props *props);
 void	fill_pixels(t_props *props);
