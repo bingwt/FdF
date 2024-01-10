@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 14:28:15 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 14:53:34 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,15 @@ int	pixel_per_plot(t_props *props)
 void	plot_points(t_props *props)
 {
 	int	ppp;
+	int	offset_x;
+	int	offset_y;
 	int	row;
 	int	col;
 	t_line	line;
 
 	ppp = pixel_per_plot(props);
+	offset_x = (WIDTH * SCALE) / 2;
+	offset_y = (HEIGHT * SCALE) / 2;
 	ft_printf("ppp: %d\n", ppp);
 	props->pixel.color = 0xFFFFFF;
 	row = 0;
@@ -95,7 +99,11 @@ void	plot_points(t_props *props)
 		{
 			props->pixel.x = (col * ppp) + (ppp / 2);
 			props->pixel.y = (row * ppp) + (ppp / 2);
-			draw_pixel(props->pixel.x, props->pixel.y, props);
+			if (props->map.matrix[row][col] > 0)
+				props->pixel.color = 0xFF00FF;
+			else
+				props->pixel.color = 0XFFFFFF;
+			draw_pixel(props->pixel.x + offset_x, props->pixel.y + offset_y, props);
 			col++;
 		}
 		row++;
