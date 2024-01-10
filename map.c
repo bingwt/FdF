@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 00:28:54 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 05:02:08 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ void	read_map(char *file, t_map *map)
 
 static int	*init_row(char *line, t_map *map)
 {
-    int		*row;
-    char	**split;
-    int		i;
+	int		*row;
+	char	**split;
+	int		i;
 
-    i = 0;
-    row = ft_calloc(map->cols + 1, sizeof(int));
-    split = ft_split(line, ' ');
-    while (i < map->cols)
-        row[i] = ft_atoi(split[i++]);
-    free_strs(split);
-    return (row);
+	i = 0;
+	row = ft_calloc(map->cols + 1, sizeof(int));
+	split = ft_split(line, ' ');
+	while (i < map->cols)
+		row[i] = ft_atoi(split[i++]);
+	free_strs(split);
+	return (row);
 }
 
 void	init_matrix(char *file, t_map *map)

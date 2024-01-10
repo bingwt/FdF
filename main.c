@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 00:29:41 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 04:58:58 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,103 +23,141 @@ static void	init_window(t_props *props)
 	props->help = 0;
 }
 
-static	void show_matrix(t_map *map)
+void	set_scale(float	***matrix, float scale)
 {
-	int row;
-	int	col;
-
-	row = 0;
-	while (row < map->rows)
-	{
-		col = 0;
-		while (col < map->cols)
-		{
-			ft_printf("%d ", map->matrix[row][col]);
-			col++;
-		}
-		ft_printf("\n");
-		row++;
-	}
+	(*matrix)[0][0] *= scale;
+	(*matrix)[1][0] *= scale;
 }
 
-static void	draw_scale(t_props *props)
+void	set_offset(float	***matrix)
 {
-	t_line line;
-
-	props->pixel.color = 0xFFFFFF;
-	draw_pixel(0, 0, props);
-	draw_pixel(256, 256, props);
-	draw_pixel(768, 256, props);
-	// draw_pixel(512, 512, props);
-	draw_pixel(256, 768, props);
-	draw_pixel(768, 768, props);
-	draw_pixel(1023, 1023, props);
-	line.x0 = 0;
-	line.y0 = 0;
-	line.x1 = 256;
-	line.y1 = 256;
-	// draw_xiaolin_wu(&line, props);
-	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+	(*matrix)[0][0] += WIDTH / 4;
+	(*matrix)[1][0] += HEIGHT / 4;
 }
 
-int	pixel_per_plot(t_props *props)
+int	pixels_per_unit(t_props *props)
 {
-	int		pixel_per_plot;
-	int		plot_width;
-	int		plot_height;
+	int	pixels;
 
-	plot_width = (props->width * SCALE) / props->map.cols;
-	plot_height = (props->height * SCALE) / props->map.rows;
-	if (plot_width < plot_height) 
-		pixel_per_plot = plot_width;
+	pixels = 0;
+	if (props->map.rows > props->map.cols)
+		pixels = props->height / props->map.rows;
 	else
-	pixel_per_plot = plot_height;
-	if (pixel_per_plot == 0)
-		return (1);
-	return (pixel_per_plot);
+		pixels = props->width / props->map.cols;
+	return (pixels);
 }
 
-void	plot_points(t_props *props)
+void	plot_vectors(t_props *props, int degrees)
 {
-	int	ppp;
-	int	offset_x;
-	int	offset_y;
 	int	row;
 	int	col;
-	t_line	line;
+	t_vec3	*vec3;
+	float	**transformation;
+	float	**matrix;
+	float	**ortho;
 
-	ppp = pixel_per_plot(props);
-	offset_x = (WIDTH * SCALE) / 2;
-	offset_y = (HEIGHT * SCALE) / 2;
-	ft_printf("ppp: %d\n", ppp);
-	props->pixel.color = 0xFFFFFF;
+	transformation = ft_calloc(3, sizeof(int *));
+	transformation[0] = ft_calloc(3, sizeof(int));
+	transformation[1] = ft_calloc(3, sizeof(int));
+	transformation[2] = ft_calloc(3, sizeof(int));
+	transformation[0][0] = 1;
+	transformation[0][1] = 0;
+	transformation[0][2] = 0;
+	transformation[1][0] = 0;
+	transformation[1][1] = 1;
+	transformation[1][2] = 0;
+	transformation[2][0] = 0;
+	transformation[2][1] = 0;
+	transformation[2][2] = 0;
 	row = 0;
 	while (row < props->map.rows)
 	{
 		col = 0;
 		while (col < props->map.cols)
 		{
-			props->pixel.x = (col * ppp) + (ppp / 2);
-			props->pixel.y = (row * ppp) + (ppp / 2);
-			if (props->map.matrix[row][col] > 0)
-				props->pixel.color = 0x604045;
+			vec3 = ft_calloc(1, sizeof(t_vec3));
+			vec3->x = col;
+			vec3->y = row;
+			vec3->z = props->map.matrix[row][col];
+			matrix = vec3_to_matrix(vec3);
+			ortho = matrix_mult(transformation, matrix);
+			free(matrix);
+			if (vec3->z > 1)
+				props->pixel.color = 0x00ff00;
+			if (vec3->z > 10)
+				props->pixel.color = 0x00ffff;
 			else
-				props->pixel.color = 0XFFFFFF;
-			draw_pixel(props->pixel.x, props->pixel.y, props);
-			line.x0 = props->pixel.x;
-			line.y0 = props->pixel.y;
+				props->pixel.color = 0xffffff;
+			free(vec3);
+			rotate_z(&ortho, degrees);
+			rotate_x(&ortho, degrees);
+			// rotate_z(&ortho, 45);
+			// rotate_x(&ortho, 54.7);
+			// rotate_y(&ortho, 0);
+			// set_scale(&ortho, pixels_per_unit(props));
+			set_scale(&ortho, 80);
+			set_offset(&ortho);
+			props->points[row * props->map.cols + col] = matrix_to_vec2(ortho);
+			if (ortho[0][0] >= 0 && ortho[0][0] < props->width && ortho[1][0] >= 0 && ortho[1][0] < props->height)
+					draw_pixel(ortho[0][0], ortho[1][0], props);
+			free(ortho);
+			col++;
+		}
+		row++;
+	}
+	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+}
+
+void	print_points(t_props *props)
+{
+	int	i;
+
+	i = 0;
+	while (props->points[i])
+	{
+		ft_printf("%d: ", i);
+		ft_printf("x: %d, y: %d", props->points[i]->x, props->points[i]->y);
+		i++;
+	}
+}
+
+void	connect_points(t_props *props)
+{
+	int	row;
+	int	col;
+	t_line	line;
+
+	row = 0;
+	while (row < props->map.rows)
+	{
+		col = 0;
+		while (col < props->map.cols)
+		{
 			if (col + 1 < props->map.cols)
 			{
-				line.x1 = ((col + 1) * ppp) + (ppp / 2);
-				line.y1 = (row * ppp) + (ppp / 2);
+				line.x0 = props->points[row * props->map.cols + col]->x;
+				line.y0 = props->points[row * props->map.cols + col]->y;
+				line.x1 = props->points[row * props->map.cols + col + 1]->x;
+				line.y1 = props->points[row * props->map.cols + col + 1]->y;
 				draw_bresenham(&line, props);
+				mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+
+			}
+			if (row + 1 < props->map.rows)
+			{
+				line.x0 = props->points[row * props->map.cols + col]->x;
+				line.y0 = props->points[row * props->map.cols + col]->y;
+				line.x1 = props->points[(row + 1) * props->map.cols + col]->x;
+				line.y1 = props->points[(row + 1) * props->map.cols + col]->y;
+				draw_bresenham(&line, props);
+				mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+
 			}
 			col++;
 		}
 		row++;
 	}
-	
-	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+	// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 }
 
 int	main(int argc, char **argv)
@@ -128,7 +166,6 @@ int	main(int argc, char **argv)
 	int		fd;
 	t_props	props;
 	t_line	line;
-	t_vec3	*points;
 
 	if (argc != 2)
 	{
@@ -136,19 +173,34 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	read_map(argv[1], &map);
-	points = ft_calloc((map.rows * map.cols) + 1, sizeof(t_vec3));
+	props.points = ft_calloc((map.rows * map.cols) + 1, sizeof(t_vec2));
 	init_matrix(argv[1], &map);
 	// init_matrix(argv[1], &map, &points);
 	// show_matrix(&map);
 	props.map = map;
 
 	init_window(&props);
-	// draw_scale(&props);
-	plot_points(&props);
-	
-	
-	
 	handle_events(&props);
+	
+	int	rotation = 0;
+
+	while (rotation < 360)
+	{
+		plot_vectors(&props, rotation);
+		connect_points(&props);
+		mlx_destroy_image(props.mlx, props.image);
+		props.image = mlx_new_image(props.mlx, props.width, props.height);
+		rotation++;
+		if (rotation == 360)
+			rotation = 0;
+	}
+	
+	// plot_vectors(&props);
+	// print_points(&props);
+	// connect_points(&props);
+	
+	
+	
 	mlx_loop(props.mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 17:22:55 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 04:36:49 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,6 @@ static int	handle_keydown(int key, t_props *props)
 		props->help = !props->help;
 		if (props->help)
 		{
-			line.y0 = 0;
-			line.y1 = props->height - 1;
-			line.y0 = 0;
-			while (line.x0++ < 170)
-			{
-				line.x1 = line.x0;
-				render_line("aa", &line, props);
-			}
 			mlx_string_put(props->mlx, props->window, \
 			props->width * 0.05, props->height / 2, 0x000700, "Controls:");
 			mlx_string_put(props->mlx, props->window, \

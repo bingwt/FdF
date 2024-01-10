@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 23:11:57 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 23:58:55 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 05:01:18 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ float	**vec3_to_matrix(t_vec3 *vec)
 	return (matrix);
 }
 
+t_vec3	*matrix_to_vec3(float **matrix)
+{
+	t_vec3	*vec;
+
+	vec = (t_vec3 *)malloc(sizeof(t_vec3));
+	vec->x = matrix[0][0];
+	vec->y = matrix[1][0];
+	vec->z = matrix[2][0];
+	return (vec);
+}
+
+t_vec2	*matrix_to_vec2(float **matrix)
+{
+	t_vec2	*vec;
+
+	vec = (t_vec2 *)malloc(sizeof(t_vec2));
+	vec->x = matrix[0][0];
+	vec->y = matrix[1][0];
+	return (vec);
+}
+
 float	**matrix_mult(float **a, float **b)
 {
 	float	**matrix;
@@ -38,7 +59,7 @@ float	**matrix_mult(float **a, float **b)
 	matrix[1] = (float *)malloc(sizeof(float) * 1);
 	matrix[2] = (float *)malloc(sizeof(float) * 1);
 	i = 0;
-	while (i < 2)
+	while (i < 3)
 	{
 		j = 0;
 		while (j < 1)
@@ -52,25 +73,6 @@ float	**matrix_mult(float **a, float **b)
 		i++;
 	}
 	return (matrix);
-}
-
-void	show_matrix(float **matrix)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 3)
-	{
-		j = 0;
-		while (j < 1)
-		{
-			printf("%f ", matrix[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
 }
 
 // int main() {

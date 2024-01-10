@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 00:28:45 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 05:09:14 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <mlx.h>
 # include <libft.h>
 # include <fcntl.h>
+# include <math.h>
 
 # define ABS(Value) (Value < 0 ?  -Value : Value)
 
@@ -85,9 +86,10 @@ typedef struct s_properties
 	t_pixel	pixel;
 	t_img	img;
 	t_map	map;
+	t_vec2	**points;
 }	t_props;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	t_map	map;
 }	t_data;
@@ -96,8 +98,15 @@ int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
 
 float	**vec3_to_matrix(t_vec3 *vec);
+t_vec2	*matrix_to_vec2(float **matrix);
 float	**matrix_mult(float **a, float **b);
+void	rotate_z(float ***matrix, float degrees);
+void	rotate_x(float ***matrix, float degrees);
+void	rotate_y(float ***matrix, float degrees);
 // void	show_matrix(float **matrix);
+
+int		pixels_per_unit(t_props *props);
+void	set_scale(float ***matrix, float scale);
 
 void	read_map(char *file, t_map *map);
 void	init_matrix(char *file, t_map *map);
