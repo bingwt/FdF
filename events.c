@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 04:36:49 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 06:46:34 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static int	handle_close(t_props *props)
 	
 	mlx_destroy_image(props->mlx, props->image);
 	mlx_destroy_window(props->mlx, props->window);
-
 	i = 0;
 	while (i < props->map.rows)
 	{
 		free(props->map.matrix[i]);
 		i++;
 	}
+	free(props->map.matrix);
 	exit(0);
 }
 

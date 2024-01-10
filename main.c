@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 05:43:11 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 06:47:50 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	set_scale(float	***matrix, float scale)
 
 void	set_offset(float	***matrix)
 {
-	(*matrix)[0][0] += WIDTH / 4;
+	(*matrix)[0][0] += WIDTH / 2;
 	(*matrix)[1][0] += HEIGHT / 4;
 }
 
@@ -45,7 +45,7 @@ int	pixels_per_unit(t_props *props)
 		pixels = WIDTH / props->map.cols;
 }
 
-void	plot_vectors(t_props *props, int degrees)
+void	plot_vectors(t_props *props)
 {
 	int	row;
 	int	col;
@@ -64,8 +64,8 @@ void	plot_vectors(t_props *props, int degrees)
 	transformation[1][0] = 0;
 	transformation[1][1] = 1;
 	transformation[1][2] = 0;
-	transformation[2][0] = 1;
-	transformation[2][1] = 1;
+	transformation[2][0] = 0;
+	transformation[2][1] = 0;
 	transformation[2][2] = 1;
 	row = 0;
 	while (row < props->map.rows)
@@ -79,6 +79,9 @@ void	plot_vectors(t_props *props, int degrees)
 			vec3->z = props->map.matrix[row][col];
 			matrix = vec3_to_matrix(vec3);
 			ortho = matrix_mult(transformation, matrix);
+			for (int i = 0; i < 3; i++) {
+				free(matrix[i]);
+			}
 			free(matrix);
 			if (vec3->z > 1)
 				props->pixel.color = 0x00ff00;
@@ -87,22 +90,29 @@ void	plot_vectors(t_props *props, int degrees)
 			else
 				props->pixel.color = 0xffffff;
 			free(vec3);
-			rotate_z(&ortho, degrees);
-			rotate_x(&ortho, degrees);
-			// rotate_z(&ortho, 45);
-			// rotate_x(&ortho, 54.7);
+			// rotate_z(&ortho, degrees);
+			// rotate_x(&ortho, degrees);
+			rotate_z(&ortho, 45);
+			rotate_x(&ortho, 54.7);
 			// rotate_y(&ortho, 0);
-			set_scale(&ortho, pixels_per_unit(props) * 0.75);
+			set_scale(&ortho, pixels_per_unit(props) * 0.7);
 			set_offset(&ortho);
 			// set_scale(&ortho, 10);
 			props->points[row * props->map.cols + col] = matrix_to_vec2(ortho);
 			if (ortho[0][0] >= 0 && ortho[0][0] < props->width && ortho[1][0] >= 0 && ortho[1][0] < props->height)
 					draw_pixel(ortho[0][0], ortho[1][0], props);
+			for (int i = 0; i < 3; i++) {
+				free(ortho[i]);
+			}
 			free(ortho);
 			col++;
 		}
 		row++;
 	}
+		for (int i = 0; i < 3; i++) {
+    		free(transformation[i]);
+	}
+	free(transformation);
 	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 }
 
@@ -180,12 +190,12 @@ int	main(int argc, char **argv)
 	init_window(&props);
 	handle_events(&props);
 	
-	int	rotation = 0;
+	// int	rotation = 0;
 
 	// while (rotation < 360)
 	// {
 	// 	plot_vectors(&props, rotation);
-	// 	connect_points(&props);
+	// 	// connect_points(&props);
 	// 	mlx_destroy_image(props.mlx, props.image);
 	// 	props.image = mlx_new_image(props.mlx, props.width, props.height);
 	// 	rotation++;
@@ -193,14 +203,18 @@ int	main(int argc, char **argv)
 	// 	if (rotation == 360)
 	// 		rotation = 0;
 	// }
-	plot_vectors(&props, 10);
-	connect_points(&props);
-	// plot_vectors(&props);
+	// plot_vectors(&props, 10);
+	// connect_points(&props);
+	plot_vectors(&props);
 	// print_points(&props);
 	// connect_points(&props);
 	
 	
 	
 	mlx_loop(props.mlx);
-	return (0);
+	for (int i = 0; i < map.rows * map.cols; i++) {
+    	free(props.points[i]);
+	}
+	free(props.points);
+return (0);
 }
