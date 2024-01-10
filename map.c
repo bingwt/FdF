@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/09 22:46:07 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 12:36:09 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,36 @@ void	read_map(char *file, t_map *map)
 	ft_printf("Columns: %d\n", map->cols);
 }
 
-static int	*init_row(char *file, t_map *map)
+static int	*init_row(char *line, t_map *map)
 {
-    int		fd;
     int		*row;
-    char	*line;
     char	**split;
     int		i;
 
-    fd = open(file, O_RDONLY);
     i = 0;
-    row = ft_calloc(map->cols, sizeof(int));
-    line = get_next_line(fd);
+    row = ft_calloc(map->cols + 1, sizeof(int));
     split = ft_split(line, ' ');
     while (i < map->cols)
         row[i] = ft_atoi(split[i++]);
     free_strs(split);
-    free(line);
-    close(fd);
     return (row);
 }
 
 void	init_matrix(char *file, t_map *map)
 {
+	int		fd;
 	int		i;
+	char	*line;
 
+	fd = open(file, O_RDONLY);
 	i = 0;
+	line = get_next_line(fd);
 	map->matrix = ft_calloc(map->rows, sizeof(int *));
 	while (i < map->rows)
-		map->matrix[i++] = init_row(file, map);
+	{
+		map->matrix[i] = init_row(line, map);
+		free(line);
+		line = get_next_line(fd);
+		i++;
+	}
 }

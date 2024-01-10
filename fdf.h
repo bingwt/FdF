@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/09 11:25:40 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 12:12:25 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 # define ABS(Value) (Value < 0 ?  -Value : Value)
 
 # ifndef WIDTH
-#  define WIDTH 960
+#  define WIDTH 1024
 # endif
 
 # ifndef HEIGHT
-#  define HEIGHT 540
+#  define HEIGHT 1024
 # endif
 
 typedef struct s_pixel

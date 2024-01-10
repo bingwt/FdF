@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/09 22:38:55 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 12:25:22 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,38 @@ int	main(int argc, char **argv)
 
 	}
 
-	props.mlx = mlx_init();
-	props.width = WIDTH;
-	props.height = HEIGHT;
-	props.window = mlx_new_window(props.mlx, props.width, props.height, "FdF");
-	props.image = mlx_new_image(props.mlx, props.width, props.height);
-	props.background = mlx_new_image(props.mlx, props.width, props.height);
-	props.help = 0;
+	int	i;
 
-	props.pixel.x = props.width / 2;
-	props.pixel.y = props.height / 2;
-	props.pixel.color = 0xFFFFFFFF;
+	i = 0;
+	while (i < map.rows)
+	{
+		free(map.matrix[i]);
+		i++;
+	}
+	free(map.matrix);
+
+	// props.mlx = mlx_init();
+	// props.width = WIDTH;
+	// props.height = HEIGHT;
+	// props.window = mlx_new_window(props.mlx, props.width, props.height, "FdF");
+	// props.image = mlx_new_image(props.mlx, props.width, props.height);
+	// props.background = mlx_new_image(props.mlx, props.width, props.height);
+	// props.help = 0;
+
+	// props.pixel.x = props.width / 2;
+	// props.pixel.y = props.height / 2;
+	// props.pixel.color = 0xFFFFFFFF;
 	
-	line.x0 = 0;
-	line.y0 = 0;
-	line.x1 = props.width - 1;
-	line.y1 = props.height - 1;
-	render_line("a", line, props);
-	line.x0 = 0;
-	line.y0 = props.height - 1;
-	line.x1 = props.width - 1;
-	line.y1 = 0;
-	render_line("aa", line, props);
+	// line.x0 = 0;
+	// line.y0 = 0;
+	// line.x1 = props.width - 1;
+	// line.y1 = props.height - 1;
+	// render_line("a", line, props);
+	// line.x0 = 0;
+	// line.y0 = props.height - 1;
+	// line.x1 = props.width - 1;
+	// line.y1 = 0;
+	// render_line("aa", line, props);
 	//line.x0 = 0;
 	//line.x1 = props.width - 1;
 	//line.y0 = 339;
@@ -71,6 +81,7 @@ int	main(int argc, char **argv)
 	//	render_line("aa", line, props);
 	//}
 	
-	handle_events(&props);
-	mlx_loop(props.mlx);
+	// handle_events(&props);
+	// mlx_loop(props.mlx);
+	return (0);
 }
