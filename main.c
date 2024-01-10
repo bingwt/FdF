@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 14:53:34 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 16:47:02 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	pixel_per_plot(t_props *props)
 		pixel_per_plot = plot_width;
 	else
 	pixel_per_plot = plot_height;
+	if (pixel_per_plot == 0)
+		return (1);
 	return (pixel_per_plot);
 }
 
@@ -100,10 +102,18 @@ void	plot_points(t_props *props)
 			props->pixel.x = (col * ppp) + (ppp / 2);
 			props->pixel.y = (row * ppp) + (ppp / 2);
 			if (props->map.matrix[row][col] > 0)
-				props->pixel.color = 0xFF00FF;
+				props->pixel.color = 0x604045;
 			else
 				props->pixel.color = 0XFFFFFF;
-			draw_pixel(props->pixel.x + offset_x, props->pixel.y + offset_y, props);
+			draw_pixel(props->pixel.x, props->pixel.y, props);
+			line.x0 = props->pixel.x;
+			line.y0 = props->pixel.y;
+			if (col + 1 < props->map.cols)
+			{
+				line.x1 = ((col + 1) * ppp) + (ppp / 2);
+				line.y1 = (row * ppp) + (ppp / 2);
+				draw_bresenham(&line, props);
+			}
 			col++;
 		}
 		row++;

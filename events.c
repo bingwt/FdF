@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 13:04:40 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 17:22:55 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static int	handle_keydown(int key, t_props *props)
 				render_line("aa", &line, props);
 			}
 			mlx_string_put(props->mlx, props->window, \
-			props->width * 0.05, props->height / 2, 0xffffff, "Controls:");
+			props->width * 0.05, props->height / 2, 0x000700, "Controls:");
 			mlx_string_put(props->mlx, props->window, \
 			props->width * 0.05, \
-			props->height / 2 + 14, 0xffffff, "Toggle help: h");
+			props->height / 2 + 14, 0xff07ff, "Toggle help: h");
 			mlx_string_put(props->mlx, props->window, \
 			props->width * 0.05, \
-			props->height / 2 + 28, 0xffffff, "Quit: ESC");
+			props->height / 2 + 28, 0xff07ff, "Quit: ESC");
 		}
 		else
 			mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);

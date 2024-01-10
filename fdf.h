@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 14:23:05 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 15:08:22 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # endif
 
 # ifndef SCALE
-#  define SCALE 0.5
+#  define SCALE 0.8
 # endif
 
 typedef struct s_pixel
