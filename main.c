@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 04:58:58 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 05:43:11 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ int	pixels_per_unit(t_props *props)
 {
 	int	pixels;
 
-	pixels = 0;
-	if (props->map.rows > props->map.cols)
-		pixels = props->height / props->map.rows;
+	if (WIDTH / props->map.cols > HEIGHT / props->map.rows)
+		pixels = HEIGHT / props->map.rows;
 	else
-		pixels = props->width / props->map.cols;
-	return (pixels);
+		pixels = WIDTH / props->map.cols;
 }
 
 void	plot_vectors(t_props *props, int degrees)
@@ -66,9 +64,9 @@ void	plot_vectors(t_props *props, int degrees)
 	transformation[1][0] = 0;
 	transformation[1][1] = 1;
 	transformation[1][2] = 0;
-	transformation[2][0] = 0;
-	transformation[2][1] = 0;
-	transformation[2][2] = 0;
+	transformation[2][0] = 1;
+	transformation[2][1] = 1;
+	transformation[2][2] = 1;
 	row = 0;
 	while (row < props->map.rows)
 	{
@@ -94,9 +92,9 @@ void	plot_vectors(t_props *props, int degrees)
 			// rotate_z(&ortho, 45);
 			// rotate_x(&ortho, 54.7);
 			// rotate_y(&ortho, 0);
-			// set_scale(&ortho, pixels_per_unit(props));
-			set_scale(&ortho, 80);
+			set_scale(&ortho, pixels_per_unit(props) * 0.75);
 			set_offset(&ortho);
+			// set_scale(&ortho, 10);
 			props->points[row * props->map.cols + col] = matrix_to_vec2(ortho);
 			if (ortho[0][0] >= 0 && ortho[0][0] < props->width && ortho[1][0] >= 0 && ortho[1][0] < props->height)
 					draw_pixel(ortho[0][0], ortho[1][0], props);
@@ -140,7 +138,7 @@ void	connect_points(t_props *props)
 				line.x1 = props->points[row * props->map.cols + col + 1]->x;
 				line.y1 = props->points[row * props->map.cols + col + 1]->y;
 				draw_bresenham(&line, props);
-				mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+				// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 
 			}
 			if (row + 1 < props->map.rows)
@@ -150,14 +148,14 @@ void	connect_points(t_props *props)
 				line.x1 = props->points[(row + 1) * props->map.cols + col]->x;
 				line.y1 = props->points[(row + 1) * props->map.cols + col]->y;
 				draw_bresenham(&line, props);
-				mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+				// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 
 			}
 			col++;
 		}
 		row++;
 	}
-	// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 }
 
 int	main(int argc, char **argv)
@@ -184,17 +182,19 @@ int	main(int argc, char **argv)
 	
 	int	rotation = 0;
 
-	while (rotation < 360)
-	{
-		plot_vectors(&props, rotation);
-		connect_points(&props);
-		mlx_destroy_image(props.mlx, props.image);
-		props.image = mlx_new_image(props.mlx, props.width, props.height);
-		rotation++;
-		if (rotation == 360)
-			rotation = 0;
-	}
-	
+	// while (rotation < 360)
+	// {
+	// 	plot_vectors(&props, rotation);
+	// 	connect_points(&props);
+	// 	mlx_destroy_image(props.mlx, props.image);
+	// 	props.image = mlx_new_image(props.mlx, props.width, props.height);
+	// 	rotation++;
+	// 	ft_printf("rotation: %d\n", rotation);
+	// 	if (rotation == 360)
+	// 		rotation = 0;
+	// }
+	plot_vectors(&props, 10);
+	connect_points(&props);
 	// plot_vectors(&props);
 	// print_points(&props);
 	// connect_points(&props);
