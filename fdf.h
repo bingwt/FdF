@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 12:12:25 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/10 14:23:05 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 
 # ifndef HEIGHT
 #  define HEIGHT 1024
+# endif
+
+# ifndef SCALE
+#  define SCALE 0.5
 # endif
 
 typedef struct s_pixel
@@ -49,6 +53,13 @@ typedef struct s_image
 	int	endian;
 }	t_img;
 
+typedef struct s_map
+{
+	int		rows;
+	int		cols;
+	int		**matrix;
+}	t_map;
+
 typedef struct s_properties
 {
 	void	*mlx;
@@ -60,14 +71,8 @@ typedef struct s_properties
 	int		help;
 	t_pixel	pixel;
 	t_img	img;
+	t_map	map;
 }	t_props;
-
-typedef struct s_map
-{
-	int		rows;
-	int		cols;
-	int		**matrix;
-}	t_map;
 
 typedef struct	s_data
 {
@@ -80,12 +85,13 @@ int		count_words(char const *str, char sep);
 void	read_map(char *file, t_map *map);
 void	init_matrix(char *file, t_map *map);
 
-void	draw_pixel(int x, int y, t_props props);
-void	fill_pixels(t_props props);
-void	draw_bresenham(t_line line, t_props props);
-void	draw_xiaolin_wu(t_line line, t_props props);
+void	draw_pixel(int x, int y, t_props *props);
+void	fill_pixels(t_props *props);
+void	draw_bresenham(t_line *line, t_props *props);
+void	draw_xiaolin_wu(t_line *line, t_props *props);
 
-void	render_line(char *algo, t_line line, t_props props);
+void	render_pixel(int x, int y, t_props *props);
+void	render_line(char *algo, t_line *line, t_props *props);
 
 int		handle_events(t_props *props);
 
