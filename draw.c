@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 04:44:23 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 23:30:00 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,68 +101,56 @@ void	fill_pixels(t_props *props)
 
 static void draw_bresenham_low(t_line *line, t_props *props)
 {
-	int	dx;
-	int	dy;
-	int	y;
-	int	p;
+    int	dx;
+    int	dy;
+    int	y;
+    int	p;
+    int	yi;
 
-	dx = line->x1 - line->x0;
-	dy = line->y1 - line->y0;
-	p = 2 * dy - dx;
-	y = line->y0;
-	while (line->x0 <= line->x1)
-	{
-		draw_pixel(line->x0, y, props);
-		if (p > 0)
-		{
-			y++;
-			p = p - 2 * dx;
-		}
-		p = p + 2 * dy;
-		line->x0++;
-	}
+    dx = line->x1 - line->x0;
+    dy = line->y1 - line->y0;
+    yi = (dy >= 0) ? 1 : -1;
+    dy = ABS(dy);
+    p = 2 * dy - dx;
+    y = line->y0;
+    while (line->x0 <= line->x1)
+    {
+        draw_pixel(line->x0, y, props);
+        if (p > 0)
+        {
+            y += yi;
+            p = p - 2 * dx;
+        }
+        p = p + 2 * dy;
+        line->x0++;
+    }
 }
 
 static void draw_bresenham_high(t_line *line, t_props *props)
 {
-	int	dx;
-	int	dy;
-	int	x;
-	int	p;
+    int	dx;
+    int	dy;
+    int	x;
+    int	p;
+    int	xi;
 
-	dx = line->x1 - line->x0;
-	dy = line->y1 - line->y0;
-	p = 2 * dx - dy;
-	x = line->x0;
-	while (line->y0 <= line->y1)
-	{
-		draw_pixel(x, line->y0, props);
-		if (p > 0)
-		{
-			x++;
-			p = p - 2 * dy;
-		}
-		p = p + 2 * dx;
-		line->y0++;
-	}
-}
-
-void draw_bresenham(t_line *line, t_props *props)
-{
-	if (ABS(line->y1 - line->y0) < ABS(line->x1 - line->x0))
-	{
-		if (line->x0 > line->x1)
-			draw_bresenham_low(line, props);
-		else
-			draw_bresenham_low(line, props);
-	}
-	else
-	{
-		if (line->y0 > line->y1)
-			draw_bresenham_high(line, props);
-		else
-			draw_bresenham_high(line, props);
-	}
+    dx = line->x1 - line->x0;
+    dy = line->y1 - line->y0;
+    xi = (dx >= 0) ? 1 : -1;
+    dx = ABS(dx);
+    p = 2 * dx - dy;
+    x = line->x0;
+    while (line->y0 <= line->y1)
+    {
+        draw_pixel(x, line->y0, props);
+        if (p > 0)
+        {
+            x += xi;
+            p = p - 2 * dy;
+        }
+        p = p + 2 * dx;
+        line->y0++;
+    }
 }
 
 static void	ft_swap(float *a, float *b)
@@ -172,6 +160,28 @@ static void	ft_swap(float *a, float *b)
 	temp = *a;
 	*a = *b;
 	*b = temp;
+}
+
+void draw_bresenham(t_line *line, t_props *props)
+{
+    if (ABS(line->y1 - line->y0) < ABS(line->x1 - line->x0))
+    {
+        if (line->x0 > line->x1)
+        {
+            ft_swap(&line->x0, &line->x1);
+            ft_swap(&line->y0, &line->y1);
+        }
+        draw_bresenham_low(line, props);
+    }
+    else
+    {
+        if (line->y0 > line->y1)
+        {
+            ft_swap(&line->x0, &line->x1);
+            ft_swap(&line->y0, &line->y1);
+        }
+        draw_bresenham_high(line, props);
+    }
 }
 
 void	draw_xiaolin_wu(t_line *line, t_props *props)
@@ -208,5 +218,19 @@ void	draw_xiaolin_wu(t_line *line, t_props *props)
             draw_pixel(x, y, props);
             draw_pixel(x, (y += gradient) + 1, props);
         }
+    }
+}
+
+void    draw_background(t_props *props)
+{
+    int x;
+    int y;
+
+    y = 0;
+    while (y++ < props->height)
+    {
+        x = 0;
+        while (x < props->width)
+            draw_pixel(++x, y, props);
     }
 }

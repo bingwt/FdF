@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 05:09:14 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/12 00:56:49 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ typedef struct s_vec3
 	int	y;
 	int	z;
 }	t_vec3;
+
+typedef struct s_point
+{
+	t_vec3	vec3;
+	int		color;
+}	t_point;
 
 typedef struct s_pixel
 {
@@ -103,6 +109,7 @@ float	**matrix_mult(float **a, float **b);
 void	rotate_z(float ***matrix, float degrees);
 void	rotate_x(float ***matrix, float degrees);
 void	rotate_y(float ***matrix, float degrees);
+float	**ortho_view(void);
 // void	show_matrix(float **matrix);
 
 int		pixels_per_unit(t_props *props);
@@ -116,6 +123,7 @@ void	draw_pixel(int x, int y, t_props *props);
 void	fill_pixels(t_props *props);
 void	draw_bresenham(t_line *line, t_props *props);
 void	draw_xiaolin_wu(t_line *line, t_props *props);
+void    draw_background(t_props *props);
 
 void	render_pixel(int x, int y, t_props *props);
 void	render_line(char *algo, t_line *line, t_props *props);

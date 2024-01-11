@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 05:01:00 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 06:46:25 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/11 11:30:24 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,24 @@ void	rotate_y(float ***matrix, float degrees)
 		free((*matrix)[i]);
 	free(*matrix);
 	*matrix = result;
+}
+
+float	**ortho_view(void)
+{
+	float	**matrix;
+
+	matrix = ft_calloc(3, sizeof(int *));
+	matrix[0] = ft_calloc(3, sizeof(int));
+	matrix[1] = ft_calloc(3, sizeof(int));
+	matrix[2] = ft_calloc(3, sizeof(int));
+	matrix[0][0] = 1;
+	matrix[0][1] = 0;
+	matrix[0][2] = 0;
+	matrix[1][0] = 0;
+	matrix[1][1] = 1;
+	matrix[1][2] = 0;
+	matrix[2][0] = 0;
+	matrix[2][1] = 0;
+	matrix[2][2] = 1;
+	return (matrix);
 }
