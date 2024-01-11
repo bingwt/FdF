@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 06:46:34 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/12 02:21:48 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static int	handle_close(t_props *props)
 	while (i < props->map.rows)
 	{
 		free(props->map.matrix[i]);
+		free(props->color_map.matrix[i]);
 		i++;
 	}
 	free(props->map.matrix);
+	free(props->color_map.matrix);
 	exit(0);
 }
 
@@ -52,40 +54,6 @@ static int	handle_keydown(int key, t_props *props)
 		}
 		else
 			mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
-		//{
-		//	mlx_string_put(props->mlx, props->window, \
-		//	props->width * 0.05, \
-		//	props->height / 2, 0x000000, "Controls:");
-		//	mlx_string_put(props->mlx, props->window, \
-		//	props->width * 0.05, \
-		//	props->height / 2 + 14, 0x000000, "Toggle help: h");
-		//	mlx_string_put(props->mlx, props->window, \
-		//	props->width * 0.05, \
-		//	props->height / 2 + 28, 0x000000, "Quit: ESC");
-		//}
-	}
-	if (key == 100)
-	{
-		printf("Test");
-		//image = mlx_get_data_addr(props->image, int *bits_per_pixel, int *size_line, int *endian );
-		//mlx_string_put(props->mlx, props->image, props->width * 0.05, props->height / 2 + 14, 0xffffff, "Toggle help: h");
-		//mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
-	}
-	if (key == 65361 || key == 65362 || key == 65363 || key ==65364)
-	{
-		if (key == 65361)
-			props->pixel.x--;
-		if (key == 65362)
-			props->pixel.y--;
-		if (key == 65363)
-			props->pixel.x++;
-		if (key == 65364)
-			props->pixel.y++;
-		mlx_destroy_image(props->mlx, props->image);
-		props->image = mlx_new_image(props->mlx, props->width, props->height);
-		draw_pixel(props->pixel.x, props->pixel.y, props);
-		draw_pixel(props->pixel.x + 5, props->pixel.y + 5, props);
-		mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 	}
 	return (0);
 }

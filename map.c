@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/12 01:17:54 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/12 01:42:38 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	read_map(char *file, t_map *map)
 {
 	int		fd;
-	char	*line;
 	int		i;
+	char	*line;
 
 	fd = open(file, O_RDONLY);
 	(*map).rows = 0;
@@ -40,19 +40,39 @@ void	read_map(char *file, t_map *map)
 static int	*init_row(char *line, t_map *map)
 {
 	int		*row;
-	char	**split;
+	char	**z;
 	int		i;
 
-	i = 0;
 	row = ft_calloc(map->cols + 1, sizeof(int));
-	split = ft_split(line, ' ');
+	z = ft_split(line, ' ');
+	i = 0;
 	while (i < map->cols)
-		row[i] = ft_atoi(split[i++]);
-	free_strs(split);
+		row[i] = ft_atoi(z[i++]);
+	free_strs(z);
 	return (row);
 }
 
-void	init_matrix(char *file, t_map *map)
+static int	*init_colors(char *line, t_map *map)
+{
+	int		*colors;
+	char	**split;
+	int		i;
+	char	*base;
+
+	colors = ft_calloc(map->cols + 1, sizeof(int));
+	split = ft_split(line, ' ');
+	i = 0;
+	base = "0123456789abcdef";
+	while (i < map->cols)
+		if (ft_strchr(split[i], ','))
+			colors[i++] = ft_atoi_base(ft_strchr(split[i], ',') + 3, base);
+		else
+			colors[i++] = 0xFFFFFF;
+	free_strs(split);
+	return (colors);
+}
+
+void	init_matrix(char *file, t_map *map, int color)
 {
 	int		fd;
 	int		i;
@@ -64,11 +84,15 @@ void	init_matrix(char *file, t_map *map)
 	map->matrix = ft_calloc(map->rows, sizeof(int *));
 	while (i < map->rows)
 	{
-		map->matrix[i] = init_row(line, map);
+		if (color)
+			map->matrix[i] = init_colors(line, map);
+		else
+			map->matrix[i] = init_row(line, map);
 		free(line);
 		line = get_next_line(fd);
 		i++;
 	}
+	close(fd);
 }
 
 // static int	*init_row(char *line, t_map *map, t_vec3 *vec)

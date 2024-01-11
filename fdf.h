@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/12 00:56:49 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/12 02:03:01 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_properties
 	t_pixel	pixel;
 	t_img	img;
 	t_map	map;
+	t_map	color_map;
 	t_vec2	**points;
 }	t_props;
 
@@ -102,6 +103,7 @@ typedef struct s_data
 
 int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
+int		ft_atoi_base(const char *str, const char *base);
 
 float	**vec3_to_matrix(t_vec3 *vec);
 t_vec2	*matrix_to_vec2(float **matrix);
@@ -116,7 +118,7 @@ int		pixels_per_unit(t_props *props);
 void	set_scale(float ***matrix, float scale);
 
 void	read_map(char *file, t_map *map);
-void	init_matrix(char *file, t_map *map);
+void	init_matrix(char *file, t_map *map, int color);
 // void	init_matrix(char *file, t_map *map, t_vec3 **points);
 
 void	draw_pixel(int x, int y, t_props *props);
