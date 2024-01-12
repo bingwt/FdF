@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/12 02:17:03 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/12 15:10:32 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_scale(float	***matrix, float scale)
 void	set_offset(float	***matrix)
 {
 	(*matrix)[0][0] += WIDTH / 2;
-	(*matrix)[1][0] += HEIGHT / 4;
+	(*matrix)[1][0] += HEIGHT / 8;
 }
 
 int	pixels_per_unit(t_props *props)
@@ -45,7 +45,7 @@ int	pixels_per_unit(t_props *props)
 		pixels = WIDTH / props->map.cols;
 }
 
-void	plot_vectors(t_props *props)
+void	plot_vectors(t_props *props, int rot_x, int rot_y, int rot_z)
 {
 	int	row;
 	int	col;
@@ -72,14 +72,14 @@ void	plot_vectors(t_props *props)
 			}
 			free(matrix);
 			free(vec3);
-			// rotate_z(&projection, degrees);
-			// rotate_x(&projection, degrees);
-			// rotate_y(&projection, degrees);
-			rotate_z(&projection, 45);
-			rotate_x(&projection, 54.7);
+			rotate_z(&projection, rot_z);
+			rotate_x(&projection, rot_x);
+			rotate_y(&projection, rot_y);
+			// rotate_z(&projection, 45);
+			// rotate_x(&projection, 54.7);
 			// rotate_y(&projection, 0);
-			set_scale(&projection, pixels_per_unit(props) * 0.7);
-			// set_scale(&projection, 5);
+			// set_scale(&projection, pixels_per_unit(props) * 0.7);
+			set_scale(&projection, 5);
 			set_offset(&projection);
 			props->points[row * props->map.cols + col] = matrix_to_vec2(projection);
 			if (projection[0][0] >= 0 && projection[0][0] < props->width && projection[1][0] >= 0 && projection[1][0] < props->height)
@@ -134,6 +134,7 @@ void	connect_points(t_props *props)
 				line.y0 = props->points[row * props->map.cols + col]->y;
 				line.x1 = props->points[row * props->map.cols + col + 1]->x;
 				line.y1 = props->points[row * props->map.cols + col + 1]->y;
+				props->pixel.color = props->color_map.matrix[row][col];
 				draw_bresenham(&line, props);
 				// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 
@@ -144,6 +145,7 @@ void	connect_points(t_props *props)
 				line.y0 = props->points[row * props->map.cols + col]->y;
 				line.x1 = props->points[(row + 1) * props->map.cols + col]->x;
 				line.y1 = props->points[(row + 1) * props->map.cols + col]->y;
+				props->pixel.color = props->color_map.matrix[row][col];
 				draw_bresenham(&line, props);
 				// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 
@@ -155,25 +157,28 @@ void	connect_points(t_props *props)
 	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 }
 
-// void	spin(t_props *props)
-// {
-// 	int	rotation;
+void	spin(t_props *props)
+{
+	int	rot_x;
+	int	rot_y;
+	int	rot_z;
 
-// 	rotation = 0;
-// 	while (rotation < 360)
-// 	{
-// 		props->pixel.color = 0x333333;
-// 		draw_background(props);
-// 		plot_vectors(props, rotation);
-// 		// connect_points(&props);
-// 		mlx_destroy_image(props->mlx, props->image);
-// 		props->image = mlx_new_image(props->mlx, props->width, props->height);
-// 		rotation++;
-// 		ft_printf("rotation: %d\n", rotation);
-// 		if (rotation == 360)
-// 			rotation = 0;
-// 	}
-// }
+	rot_x = 0;
+	rot_y = 0;
+	rot_z = 0;
+	while (1)
+	{
+		// mlx_clear_window(props->mlx, props->window);
+		mlx_destroy_image(props->mlx, props->image);
+		props->image = mlx_new_image(props->mlx, props->width, props->height);
+		rot_x += 1;
+		rot_y += 1;
+		rot_z += 1;
+		plot_vectors(props, rot_x, rot_y, rot_z);
+		// connect_points(props);
+		mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
+	}
+}
 
 int	main(int argc, char **argv)
 {
@@ -201,10 +206,11 @@ int	main(int argc, char **argv)
 	init_window(&props);
 	handle_events(&props);
 	
-	// spin(&props);
-	props.pixel.color = 0x333333;
-	draw_background(&props);
-	plot_vectors(&props);
+	spin(&props);
+	// props.pixel.color = 0x333333;
+	// props.pixel.color = 0x555555;
+	// draw_background(&props);
+	// plot_vectors(&props, 54, 0, 45);
 	// print_points(&props);
 	// connect_points(&props);
 	
