@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/12 15:10:32 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/13 00:42:36 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	plot_vectors(t_props *props, int rot_x, int rot_y, int rot_z)
 			vec3->x = col;
 			vec3->y = row;
 			vec3->z = props->map.matrix[row][col];
+			set_local_origin(props, &vec3);
 			matrix = vec3_to_matrix(vec3);
 			projection = matrix_mult(transformation, matrix);
 			for (int i = 0; i < 3; i++) {
@@ -79,8 +80,9 @@ void	plot_vectors(t_props *props, int rot_x, int rot_y, int rot_z)
 			// rotate_x(&projection, 54.7);
 			// rotate_y(&projection, 0);
 			// set_scale(&projection, pixels_per_unit(props) * 0.7);
-			set_scale(&projection, 5);
-			set_offset(&projection);
+			set_scale(&projection, 10);
+			// set_offset(&projection);
+			set_world_origin(props, &projection);
 			props->points[row * props->map.cols + col] = matrix_to_vec2(projection);
 			if (projection[0][0] >= 0 && projection[0][0] < props->width && projection[1][0] >= 0 && projection[1][0] < props->height)
 			{
@@ -174,7 +176,7 @@ void	spin(t_props *props)
 		rot_x += 1;
 		rot_y += 1;
 		rot_z += 1;
-		plot_vectors(props, rot_x, rot_y, rot_z);
+		plot_vectors(props, 0, rot_y, 0);
 		// connect_points(props);
 		mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 	}
@@ -210,7 +212,7 @@ int	main(int argc, char **argv)
 	// props.pixel.color = 0x333333;
 	// props.pixel.color = 0x555555;
 	// draw_background(&props);
-	// plot_vectors(&props, 54, 0, 45);
+	// plot_vectors(&props, 0, 0, 0);
 	// print_points(&props);
 	// connect_points(&props);
 	

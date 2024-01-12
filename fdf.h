@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/12 02:03:01 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/13 00:43:29 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ typedef struct s_data
 int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
 int		ft_atoi_base(const char *str, const char *base);
+
+void	set_local_origin(t_props *props, t_vec3 **vec3);
+void	set_world_origin(t_props *props, float ***matrix);
 
 float	**vec3_to_matrix(t_vec3 *vec);
 t_vec2	*matrix_to_vec2(float **matrix);
