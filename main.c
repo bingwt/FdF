@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/13 00:42:36 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/13 20:03:45 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	init_window(t_props *props)
 	props->height = HEIGHT;
 	props->window = mlx_new_window(props->mlx, props->width, props->height, "FdF");
 	props->image = mlx_new_image(props->mlx, props->width, props->height);
-	props->background = mlx_new_image(props->mlx, props->width, props->height);
 	props->help = 0;
 }
 
@@ -79,8 +78,8 @@ void	plot_vectors(t_props *props, int rot_x, int rot_y, int rot_z)
 			// rotate_z(&projection, 45);
 			// rotate_x(&projection, 54.7);
 			// rotate_y(&projection, 0);
-			// set_scale(&projection, pixels_per_unit(props) * 0.7);
-			set_scale(&projection, 10);
+			set_scale(&projection, pixels_per_unit(props) * props->scale);
+			// set_scale(&projection, 10);
 			// set_offset(&projection);
 			set_world_origin(props, &projection);
 			props->points[row * props->map.cols + col] = matrix_to_vec2(projection);
@@ -152,10 +151,12 @@ void	connect_points(t_props *props)
 				// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 
 			}
+			free(props->points[row * props->map.cols + col]);
 			col++;
 		}
 		row++;
 	}
+	free(props->points);
 	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 }
 
@@ -190,11 +191,11 @@ int	main(int argc, char **argv)
 	t_props	props;
 	t_line	line;
 
-	if (argc != 2)
-	{
-		ft_printf("Please provide a map!\n");
-		return (1);
-	}
+	// if (argc != 2)
+	// {
+	// 	ft_printf("Please provide a map!\n");
+	// 	return (1);
+	// }
 	read_map(argv[1], &map);
 	read_map(argv[1], &color_map);
 	props.points = ft_calloc((map.rows * map.cols) + 1, sizeof(t_vec2));
@@ -204,17 +205,21 @@ int	main(int argc, char **argv)
 	// show_matrix(&map);
 	props.map = map;
 	props.color_map = color_map;
+	props.scale = ft_atoi(argv[2]) / 100.0;
 
 	init_window(&props);
 	handle_events(&props);
 	
-	spin(&props);
-	// props.pixel.color = 0x333333;
+	if (argc == 2)
+		spin(&props);
+	else
+	props.pixel.color = 0x333333;
 	// props.pixel.color = 0x555555;
-	// draw_background(&props);
+	draw_background(&props);
 	// plot_vectors(&props, 0, 0, 0);
+	plot_vectors(&props, ft_atoi(argv[3]), ft_atoi(argv[4]), ft_atoi(argv[5]));
 	// print_points(&props);
-	// connect_points(&props);
+	connect_points(&props);
 	
 	
 	

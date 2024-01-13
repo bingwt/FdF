@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/13 00:43:29 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/13 20:04:11 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ typedef struct s_properties
 	void	*mlx;
 	void	*window;
 	void	*image;
-	void	*background;
 	int		width;
 	int		height;
 	int		help;
@@ -94,6 +93,7 @@ typedef struct s_properties
 	t_map	map;
 	t_map	color_map;
 	t_vec2	**points;
+	float	scale;
 }	t_props;
 
 typedef struct s_data
