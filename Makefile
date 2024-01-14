@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2024/01/13 20:04:21 by btan             ###   ########.fr        #
+#    Updated: 2024/01/14 01:22:19 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,10 +51,10 @@ test-make:
 	make fclean -C Libft
 	make clean -C mlx
 test: test-make
-	cc main.c fdf_utils.c matrix_math.c normalize.c transform.c map.c draw.c render.c events.c -I. -Imlx -ILibft libft.a mlx.a -lX11 -lXext -lm -g
+	cc main.c fdf_utils.c matrix_math.c normalize.c transform.c map.c pixel.c draw.c render.c events.c -I. -Imlx -ILibft libft.a mlx.a -lX11 -lXext -lm -g
 	#cc main.c events.c -Imlx -Lmlx -lmlx -ILibft -LLibft -l:libft.a -lXext -lX11 -g
 test-720: test-make
-	cc main.c fdf_utils.c matrix_math.c normalize.c transform.c map.c draw.c render.c events.c -I. -Imlx -ILibft libft.a mlx.a -lX11 -lXext -lm -D WIDTH=1280 -D HEIGHT=720 -g
+	cc main.c fdf_utils.c matrix_math.c normalize.c transform.c map.c pixel.c draw.c render.c events.c -I. -Imlx -ILibft libft.a mlx.a -lX11 -lXext -lm -D WIDTH=1280 -D HEIGHT=720 -g
 run:
 	clear && ./a.out
 tester:

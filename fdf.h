@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/13 20:04:11 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/14 23:36:28 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ typedef struct s_vec3
 	int	z;
 }	t_vec3;
 
+typedef struct s_color
+{
+	int	red;
+	int	green;
+	int	blue;
+}	t_color;
+
 typedef struct s_point
 {
 	t_vec3	vec3;
@@ -53,9 +60,9 @@ typedef struct s_point
 
 typedef struct s_pixel
 {
-	int	x;
-	int	y;
 	int	color;
+	int	next_color;
+	t_color	*step;
 }	t_pixel;
 
 typedef struct s_line
@@ -80,20 +87,28 @@ typedef struct s_map
 	int		**matrix;
 }	t_map;
 
+// typedef struct s_rgb_map
+// {
+// 	int		rows;
+// 	int		cols;
+// 	t_color	**matrix;
+// }	t_rgb_map;
+
 typedef struct s_properties
 {
-	void	*mlx;
-	void	*window;
-	void	*image;
-	int		width;
-	int		height;
-	int		help;
-	t_pixel	pixel;
-	t_img	img;
-	t_map	map;
-	t_map	color_map;
-	t_vec2	**points;
-	float	scale;
+	void		*mlx;
+	void		*window;
+	void		*image;
+	int			width;
+	int			height;
+	int			help;
+	t_pixel		pixel;
+	t_img		img;
+	t_map		map;
+	t_map		color_map;
+	// t_rgb_map	rgb_map;
+	t_vec2		**points;
+	float		scale;
 }	t_props;
 
 typedef struct s_data
@@ -125,6 +140,12 @@ void	init_matrix(char *file, t_map *map, int color);
 // void	init_matrix(char *file, t_map *map, t_vec3 **points);
 
 void	draw_pixel(int x, int y, t_props *props);
+t_color    *hex_to_rgb(char *hex);
+t_color *dec_to_rgb(int dec);
+int		rgb_to_dec(t_color *color);
+t_color *color_lerp(t_color *color1, t_color *color2, float t);
+t_color *color_step(t_color *color1, t_color *color2, int ppu);
+
 void	fill_pixels(t_props *props);
 void	draw_bresenham(t_line *line, t_props *props);
 void	draw_xiaolin_wu(t_line *line, t_props *props);

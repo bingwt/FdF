@@ -6,53 +6,11 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 23:30:00 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/15 00:26:16 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
-
-// void	draw_pixel(int x, int y, t_props props)
-// {
-// 	char	*buffer;
-// 	int		pixel;
-// 	int		pixel_bits;
-// 	int		line_bytes;
-
-// 	buffer = mlx_get_data_addr(props->image, &pixel_bits, &line_bytes, &props->img.endian);
-// 	props->pixel.color = mlx_get_color_value(props->mlx, props->pixel.color);
-// 	pixel = (y * line_bytes) + (x * 4);
-// 	if (props->img.endian == 1)
-// 	{
-// 		buffer[pixel + 0] = (props->pixel.color >> 24);
-// 		buffer[pixel + 1] = (props->pixel.color >> 16) & 0xFF;
-// 		buffer[pixel + 2] = (props->pixel.color >> 8) & 0xFF;
-// 		buffer[pixel + 3] = (props->pixel.color) & 0xFF;
-// 	}
-
-// 	else if (props->img.endian == 0)
-// 	{
-// 		buffer[pixel + 0] = (props->pixel.color) & 0xFF;
-// 		buffer[pixel + 1] = (props->pixel.color >> 8) & 0xFF;
-// 		buffer[pixel + 2] = (props->pixel.color >> 16) & 0xFF;
-// 		buffer[pixel + 3] = (props->pixel.color >> 24);
-// 	}
-// }
-
-void	draw_pixel(int x, int y, t_props *props)
-{
-	char	*buffer;
-	int		offset;
-	int		pixel_bits;
-	int		line_bytes;
-
-	pixel_bits = props->img.pixel_bits;
-	line_bytes = props->img.line_bytes;
-	buffer = mlx_get_data_addr(props->image, &pixel_bits, &line_bytes, &props->img.endian);
-	offset = (line_bytes * y) + (x * (pixel_bits / 8));	
-	*((unsigned int *)(offset + buffer)) = props->pixel.color;
-	//*((unsigned int *)(offset + buffer)) = (props->pixel.alpha << 24) | props->pixel.color;
-}
 
 //void	draw_pixel(int x, int y, t_props props)
 //{
@@ -99,56 +57,87 @@ void	fill_pixels(t_props *props)
 // 	}
 // }
 
-static void draw_bresenham_low(t_line *line, t_props *props)
+// void	interpolate(t_props *props)
+// {
+// 	t_color	*color;
+// 	t_color	*step;
+
+// 	color = dec_to_rgb(props->pixel.color);
+// 	step = ft_calloc(1, sizeof(t_color));
+//     // ft_printf("here");
+// 	step = color_step(dec_to_rgb(props->pixel.color), dec_to_rgb(props->pixel.next_color), pixels_per_unit(props));
+// 	color->red += step->red;
+// 	color->green += step->green;
+// 	color->blue += step->blue;
+// 	props->pixel.color = rgb_to_dec(color);
+// 	free(color);
+// 	free(step);
+// }
+
+static void    step_color(t_color *color, t_color *step)
 {
-    int	dx;
-    int	dy;
-    int	y;
-    int	p;
-    int	yi;
+    color->red += step->red;
+    color->green += step->green;
+    color->blue += step->blue;
+}
+
+static void check_slope(int *axis, int *iter)
+{
+    *iter = -1;
+    if (*axis < 0)
+        *axis = -(*axis);
+    else
+        *iter = 1;
+}
+
+void draw_bresenham_low(t_line *line, t_props *props)
+{
+    int dx;
+    int dy;
+    int yi;
+    int diff;
+    int y;
 
     dx = line->x1 - line->x0;
     dy = line->y1 - line->y0;
-    yi = (dy >= 0) ? 1 : -1;
-    dy = ABS(dy);
-    p = 2 * dy - dx;
+    check_slope(&dy, &yi);
+    diff = (2 * dy) - dx;
     y = line->y0;
     while (line->x0 <= line->x1)
     {
         draw_pixel(line->x0, y, props);
-        if (p > 0)
+        if (diff > 0)
         {
-            y += yi;
-            p = p - 2 * dx;
+            y = y + yi;
+            diff = diff - (2 * dx);
         }
-        p = p + 2 * dy;
+        diff = diff + (2 * dy);
         line->x0++;
     }
 }
 
-static void draw_bresenham_high(t_line *line, t_props *props)
+void draw_bresenham_high(t_line *line, t_props *props)
 {
-    int	dx;
-    int	dy;
-    int	x;
-    int	p;
-    int	xi;
+    int dx;
+    int dy;
+    int xi;
+    int diff;
+    int x;
 
     dx = line->x1 - line->x0;
     dy = line->y1 - line->y0;
-    xi = (dx >= 0) ? 1 : -1;
-    dx = ABS(dx);
-    p = 2 * dx - dy;
+    check_slope(&dx, &xi);
+    diff = 2 * dx - dy;
     x = line->x0;
     while (line->y0 <= line->y1)
     {
         draw_pixel(x, line->y0, props);
-        if (p > 0)
+        if (diff > 0)
         {
-            x += xi;
-            p = p - 2 * dy;
+            x = x + xi;
+            diff = diff - (2 * dy);
         }
-        p = p + 2 * dx;
+        diff = diff + (2 * dx);
         line->y0++;
     }
 }
@@ -164,7 +153,11 @@ static void	ft_swap(float *a, float *b)
 
 void draw_bresenham(t_line *line, t_props *props)
 {
-    if (ABS(line->y1 - line->y0) < ABS(line->x1 - line->x0))
+    int dx, dy;
+
+    dx = line->x1 - line->x0;
+    dy = line->y1 - line->y0;
+    if (ABS(dy) < ABS(dx))
     {
         if (line->x0 > line->x1)
         {

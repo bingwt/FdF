@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/12 01:42:38 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/14 01:52:28 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	read_map(char *file, t_map *map)
 	line = get_next_line(fd);
 	while (line)
 	{
-//		ft_printf("%s\n", line);
 		if (!map->cols)
 			map->cols += count_words(line, ' ');
 		free(line);

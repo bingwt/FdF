@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/13 20:03:45 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/14 23:28:53 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ void	set_scale(float	***matrix, float scale)
 {
 	(*matrix)[0][0] *= scale;
 	(*matrix)[1][0] *= scale;
-}
-
-void	set_offset(float	***matrix)
-{
-	(*matrix)[0][0] += WIDTH / 2;
-	(*matrix)[1][0] += HEIGHT / 8;
 }
 
 int	pixels_per_unit(t_props *props)
@@ -75,17 +69,11 @@ void	plot_vectors(t_props *props, int rot_x, int rot_y, int rot_z)
 			rotate_z(&projection, rot_z);
 			rotate_x(&projection, rot_x);
 			rotate_y(&projection, rot_y);
-			// rotate_z(&projection, 45);
-			// rotate_x(&projection, 54.7);
-			// rotate_y(&projection, 0);
 			set_scale(&projection, pixels_per_unit(props) * props->scale);
-			// set_scale(&projection, 10);
-			// set_offset(&projection);
 			set_world_origin(props, &projection);
 			props->points[row * props->map.cols + col] = matrix_to_vec2(projection);
 			if (projection[0][0] >= 0 && projection[0][0] < props->width && projection[1][0] >= 0 && projection[1][0] < props->height)
 			{
-				// props->pixel.color = 0xffffff;
 				props->pixel.color = props->color_map.matrix[row][col];
 				draw_pixel(projection[0][0], projection[1][0], props);
 			}
@@ -131,11 +119,13 @@ void	connect_points(t_props *props)
 		{
 			if (col + 1 < props->map.cols)
 			{
-				line.x0 = props->points[row * props->map.cols + col]->x;
-				line.y0 = props->points[row * props->map.cols + col]->y;
-				line.x1 = props->points[row * props->map.cols + col + 1]->x;
-				line.y1 = props->points[row * props->map.cols + col + 1]->y;
+				line.x0 = props->points[(row * props->map.cols) + col]->x;
+				line.y0 = props->points[(row * props->map.cols) + col]->y;
+				line.x1 = props->points[(row * props->map.cols) + col + 1]->x;
+				line.y1 = props->points[(row * props->map.cols) + col + 1]->y;
 				props->pixel.color = props->color_map.matrix[row][col];
+				props->pixel.next_color = props->color_map.matrix[row][col + 1];
+				// interpolate(props, row, col);
 				draw_bresenham(&line, props);
 				// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 
@@ -147,6 +137,8 @@ void	connect_points(t_props *props)
 				line.x1 = props->points[(row + 1) * props->map.cols + col]->x;
 				line.y1 = props->points[(row + 1) * props->map.cols + col]->y;
 				props->pixel.color = props->color_map.matrix[row][col];
+				props->pixel.next_color = props->color_map.matrix[row + 1][col];
+				// interpolate(props, row, col);
 				draw_bresenham(&line, props);
 				// mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 
@@ -156,7 +148,6 @@ void	connect_points(t_props *props)
 		}
 		row++;
 	}
-	free(props->points);
 	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 }
 
@@ -169,6 +160,8 @@ void	spin(t_props *props)
 	rot_x = 0;
 	rot_y = 0;
 	rot_z = 0;
+	plot_vectors(props, 0, 0, 0);
+	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 	while (1)
 	{
 		// mlx_clear_window(props->mlx, props->window);
@@ -178,15 +171,16 @@ void	spin(t_props *props)
 		rot_y += 1;
 		rot_z += 1;
 		plot_vectors(props, 0, rot_y, 0);
-		// connect_points(props);
+		connect_points(props);
 		mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	t_map	map;
-	t_map	color_map;
+	t_map		map;
+	t_map		color_map;
+	// t_rgb_map	rgb_map;
 	int		fd;
 	t_props	props;
 	t_line	line;
@@ -198,19 +192,20 @@ int	main(int argc, char **argv)
 	// }
 	read_map(argv[1], &map);
 	read_map(argv[1], &color_map);
+	// read_map(argv[1], &rgb_map);
 	props.points = ft_calloc((map.rows * map.cols) + 1, sizeof(t_vec2));
 	init_matrix(argv[1], &map, 0);
 	init_matrix(argv[1], &color_map, 1);
-	// init_matrix(argv[1], &map, &points);
-	// show_matrix(&map);
+	// init_matrix(argv[1], &rgb_map, 2);
 	props.map = map;
 	props.color_map = color_map;
+	// props.rgb_map = rgb_map;
 	props.scale = ft_atoi(argv[2]) / 100.0;
 
 	init_window(&props);
 	handle_events(&props);
 	
-	if (argc == 2)
+	if (argc == 3)
 		spin(&props);
 	else
 	props.pixel.color = 0x333333;
