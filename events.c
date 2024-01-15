@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 04:46:30 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 06:52:36 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	handle_close(t_props *props)
 	free(props->map.matrix);
 	free(props->color_map.matrix);
 	free(props->points);
+	free(props->rotation);
 	exit(0);
 }
 

@@ -6,11 +6,31 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 05:01:00 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:14:55 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 06:28:00 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fdf.h>
+
+float	**orthographic(void)
+{
+	float	**matrix;
+
+	matrix = ft_calloc(3, sizeof(int *));
+	matrix[0] = ft_calloc(3, sizeof(int));
+	matrix[1] = ft_calloc(3, sizeof(int));
+	matrix[2] = ft_calloc(3, sizeof(int));
+	matrix[0][0] = 1;
+	matrix[0][1] = 0;
+	matrix[0][2] = 0;
+	matrix[1][0] = 0;
+	matrix[1][1] = 1;
+	matrix[1][2] = 0;
+	matrix[2][0] = 0;
+	matrix[2][1] = 0;
+	matrix[2][2] = 1;
+	return (matrix);
+}
 
 void	rotate_z(float ***matrix, float degrees)
 {
@@ -90,22 +110,9 @@ void	rotate_y(float ***matrix, float degrees)
 	*matrix = result;
 }
 
-float	**ortho_view(void)
+void	rotate_xyz(float ***projection, t_vec3 **rotation)
 {
-	float	**matrix;
-
-	matrix = ft_calloc(3, sizeof(int *));
-	matrix[0] = ft_calloc(3, sizeof(int));
-	matrix[1] = ft_calloc(3, sizeof(int));
-	matrix[2] = ft_calloc(3, sizeof(int));
-	matrix[0][0] = 1;
-	matrix[0][1] = 0;
-	matrix[0][2] = 0;
-	matrix[1][0] = 0;
-	matrix[1][1] = 1;
-	matrix[1][2] = 0;
-	matrix[2][0] = 0;
-	matrix[2][1] = 0;
-	matrix[2][2] = 1;
-	return (matrix);
+	rotate_z(projection, (*rotation)->z);
+	rotate_x(projection, (*rotation)->x);
+	rotate_y(projection, (*rotation)->y);
 }

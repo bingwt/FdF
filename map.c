@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:28:54 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 06:35:55 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ static int	*init_row(char *line, t_map *map)
 	z = ft_split(line, ' ');
 	i = 0;
 	while (i < map->cols)
-	{
-		row[i] = ft_atoi(z[i]);
-		i++;
-	}
+		row[i++] = ft_atoi(z[i]);
 	free_strs(z);
 	return (row);
 }

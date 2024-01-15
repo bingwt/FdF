@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:12:50 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 06:49:31 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	draw_bresenham(t_line *line, t_props *props)
 
 	dx = line->x1 - line->x0;
 	dy = line->y1 - line->y0;
-	if (ABS(dy) < ABS(dx))
+	if (ft_abs(dy) < ft_abs(dx))
 	{
 		if (line->x0 > line->x1)
 		{

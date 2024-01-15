@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:09:24 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 06:48:05 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <math.h>
 
-# define ABS(Value) (Value < 0 ?  -Value : Value)
+// # define ABS(Value) (Value < 0 ?  -Value : Value)
 
 # ifndef WIDTH
 #  define WIDTH 1024
@@ -60,8 +60,8 @@ typedef struct s_point
 
 typedef struct s_pixel
 {
-	int	color;
-	int	next_color;
+	int		color;
+	int		next_color;
 	t_color	*step;
 }	t_pixel;
 
@@ -87,13 +87,6 @@ typedef struct s_map
 	int		**matrix;
 }	t_map;
 
-// typedef struct s_rgb_map
-// {
-// 	int		rows;
-// 	int		cols;
-// 	t_color	**matrix;
-// }	t_rgb_map;
-
 typedef struct s_properties
 {
 	void		*mlx;
@@ -106,9 +99,9 @@ typedef struct s_properties
 	t_img		img;
 	t_map		map;
 	t_map		color_map;
-	// t_rgb_map	rgb_map;
 	t_vec2		**points;
 	float		scale;
+	t_vec3		*rotation;
 }	t_props;
 
 typedef struct s_data
@@ -118,6 +111,7 @@ typedef struct s_data
 
 int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
+int		ft_abs(int n);
 void	ft_swap(float *a, float *b);
 int		ft_atoi_base(const char *str, const char *base);
 
@@ -129,27 +123,28 @@ t_vec2	*matrix_to_vec2(float **matrix);
 float	**matrix_mult(float **a, float **b);
 void	free_matrix(float **matrix);
 
+float	**orthographic(void);
 void	rotate_z(float ***matrix, float degrees);
 void	rotate_x(float ***matrix, float degrees);
 void	rotate_y(float ***matrix, float degrees);
-float	**ortho_view(void);
-// void	show_matrix(float **matrix);
+void	rotate_xyz(float ***projection, t_vec3 **rotation);
 
 int		pixels_per_unit(t_props *props);
 void	set_scale(float ***matrix, float scale);
 
 void	read_map(char *file, t_map *map);
 void	init_matrix(char *file, t_map *map, int color);
-// void	init_matrix(char *file, t_map *map, t_vec3 **points);
 
 void	draw_pixel(int x, int y, t_props *props);
-t_color    *hex_to_rgb(char *hex);
-t_color *dec_to_rgb(int dec);
+t_color	*hex_to_rgb(char *hex);
+t_color	*dec_to_rgb(int dec);
 int		rgb_to_dec(t_color *color);
-t_color *color_step(t_color *color1, t_color *color2, int ppu);
+t_color	*color_step(t_color *color1, t_color *color2, int ppu);
+
+void	plot_vectors(t_props *props);
+void	connect_points(t_props *props);
 
 void	draw_bresenham(t_line *line, t_props *props);
-void	draw_xiaolin_wu(t_line *line, t_props *props);
 void    draw_background(t_props *props);
 
 int		handle_events(t_props *props);

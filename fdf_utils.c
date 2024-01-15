@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:01:57 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:13:17 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 06:39:35 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ int	count_words(char const *str, char sep)
 		if (is_sep(*str, sep) && !is_sep(*(str - 1), sep))
 			words++;
 	return (words);
+}
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
 }
 
 void	ft_swap(float *a, float *b)
