@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 23:11:57 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 05:01:18 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 05:08:52 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,21 @@ float	**matrix_mult(float **a, float **b)
 	return (matrix);
 }
 
+void	free_matrix(float **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+		free(matrix[i++]);
+	free(matrix);
+}
+
 // int main() {
 //     t_vec3 vec3;
 //     float **transformation;
 //     float **matrix;
-	
+
 // 	transformation = (float **)malloc(sizeof(float *) * 2);
 // 	transformation[0] = (float *)malloc(sizeof(float) * 3);
 // 	transformation[1] = (float *)malloc(sizeof(float) * 3);

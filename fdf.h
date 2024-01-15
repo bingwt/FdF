@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/14 23:36:28 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 05:09:24 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_data
 
 int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
+void	ft_swap(float *a, float *b);
 int		ft_atoi_base(const char *str, const char *base);
 
 void	set_local_origin(t_props *props, t_vec3 **vec3);
@@ -126,6 +127,8 @@ void	set_world_origin(t_props *props, float ***matrix);
 float	**vec3_to_matrix(t_vec3 *vec);
 t_vec2	*matrix_to_vec2(float **matrix);
 float	**matrix_mult(float **a, float **b);
+void	free_matrix(float **matrix);
+
 void	rotate_z(float ***matrix, float degrees);
 void	rotate_x(float ***matrix, float degrees);
 void	rotate_y(float ***matrix, float degrees);
@@ -143,16 +146,11 @@ void	draw_pixel(int x, int y, t_props *props);
 t_color    *hex_to_rgb(char *hex);
 t_color *dec_to_rgb(int dec);
 int		rgb_to_dec(t_color *color);
-t_color *color_lerp(t_color *color1, t_color *color2, float t);
 t_color *color_step(t_color *color1, t_color *color2, int ppu);
 
-void	fill_pixels(t_props *props);
 void	draw_bresenham(t_line *line, t_props *props);
 void	draw_xiaolin_wu(t_line *line, t_props *props);
 void    draw_background(t_props *props);
-
-void	render_pixel(int x, int y, t_props *props);
-void	render_line(char *algo, t_line *line, t_props *props);
 
 int		handle_events(t_props *props);
 

@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/15 16:38:03 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 05:11:19 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,24 @@ static void	init_window(t_props *props)
 	props->mlx = mlx_init();
 	props->width = WIDTH;
 	props->height = HEIGHT;
-	props->window = mlx_new_window(props->mlx, props->width, props->height, "FdF");
+	props->window = mlx_new_window(props->mlx, props->width, \
+	props->height, "FdF");
 	props->image = mlx_new_image(props->mlx, props->width, props->height);
 	props->help = 0;
+}
+
+void	draw_background(t_props *props)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y++ < props->height)
+	{
+		x = 0;
+		while (x < props->width)
+			draw_pixel(++x, y, props);
+	}
 }
 
 void	set_scale(float	***matrix, float scale)

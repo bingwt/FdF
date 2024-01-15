@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 05:01:00 by btan              #+#    #+#             */
-/*   Updated: 2024/01/11 11:30:24 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 05:14:55 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,8 @@ void	rotate_z(float ***matrix, float degrees)
 	rotation[2][1] = 0;
 	rotation[2][2] = 1;
 	result = matrix_mult(rotation, *matrix);
-	for (int i = 0; i < 3; i++)
-		free(rotation[i]);
-	free(rotation);
-	for (int i = 0; i < 3; i++)
-		free((*matrix)[i]);
-	free(*matrix);
+	free_matrix(rotation);
+	free_matrix(*matrix);
 	*matrix = result;
 }
 
@@ -63,12 +59,8 @@ void	rotate_x(float ***matrix, float degrees)
 	rotation[2][1] = sin(angle);
 	rotation[2][2] = cos(angle);
 	result = matrix_mult(rotation, *matrix);
-	for (int i = 0; i < 3; i++)
-		free(rotation[i]);
-	free(rotation);
-	for (int i = 0; i < 3; i++)
-		free((*matrix)[i]);
-	free(*matrix);
+	free_matrix(rotation);
+	free_matrix(*matrix);
 	*matrix = result;
 }
 
@@ -93,12 +85,8 @@ void	rotate_y(float ***matrix, float degrees)
 	rotation[2][1] = 0;
 	rotation[2][2] = cos(angle);
 	result = matrix_mult(rotation, *matrix);
-	for (int i = 0; i < 3; i++)
-		free(rotation[i]);
-	free(rotation);
-	for (int i = 0; i < 3; i++)
-		free((*matrix)[i]);
-	free(*matrix);
+	free_matrix(rotation);
+	free_matrix(*matrix);
 	*matrix = result;
 }
 
