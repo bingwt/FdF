@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/14 23:28:53 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/15 16:38:03 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	pixels_per_unit(t_props *props)
 		pixels = HEIGHT / props->map.rows;
 	else
 		pixels = WIDTH / props->map.cols;
+	return (pixels);
 }
 
 void	plot_vectors(t_props *props, int rot_x, int rot_y, int rot_z)
