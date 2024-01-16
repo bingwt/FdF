@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 16:52:58 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 16:58:48 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ static void	draw_bresenham_low(t_line *line, t_props *props)
 	y = line->y0;
 	while (line->x0 <= line->x1)
 	{
-		if (line->y0 >= 0 && line->y0 < props->height && \
-		line->x0 >= 0 && line->x0 < props->width)
-			draw_pixel(line->x0, y, props);
+		draw_pixel(line->x0, y, props);
 		if (diff > 0)
 		{
 			y = y + yi;
@@ -64,9 +62,7 @@ static void	draw_bresenham_high(t_line *line, t_props *props)
 	x = line->x0;
 	while (line->y0 <= line->y1)
 	{
-		if (line->y0 >= 0 && line->y0 < props->height && \
-		x >= 0 && x < props->width)
-			draw_pixel(x, line->y0, props);
+		draw_pixel(x, line->y0, props);
 		if (diff > 0)
 		{
 			x = x + xi;
