@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 08:08:57 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 08:35:31 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,6 @@ typedef struct s_color
 	int	green;
 	int	blue;
 }	t_color;
-
-typedef struct s_point
-{
-	t_vec3	vec3;
-	int		color;
-}	t_point;
 
 typedef struct s_pixel
 {
@@ -104,11 +98,6 @@ typedef struct s_properties
 	t_vec3		*rotation;
 }	t_props;
 
-typedef struct s_data
-{
-	t_map	map;
-}	t_data;
-
 int		is_sep(char const c, char sep);
 int		count_words(char const *str, char sep);
 int		ft_abs(int n);
@@ -147,6 +136,6 @@ void	connect_points(t_props *props);
 void	draw_bresenham(t_line *line, t_props *props);
 void	draw_background(t_props *props);
 
-void		handle_events(t_props *props);
+void	handle_events(t_props *props);
 
 #endif
