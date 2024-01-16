@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 05:32:12 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 07:37:48 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 08:24:32 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ static float	**ortho_projection(float ***matrix)
 	projection = matrix_mult(transformation, *matrix);
 	free_matrix(transformation);
 	return (projection);
+}
+
+void	set_scale(float	***matrix, float scale)
+{
+	(*matrix)[0][0] *= scale;
+	(*matrix)[1][0] *= scale;
 }
 
 static void	process_vector(t_props *props, int row, int col)

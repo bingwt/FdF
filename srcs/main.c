@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 08:20:42 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 08:32:01 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,6 @@ void	draw_background(t_props *props)
 	}
 }
 
-void	set_scale(float	***matrix, float scale)
-{
-	(*matrix)[0][0] *= scale;
-	(*matrix)[1][0] *= scale;
-}
-
 int	pixels_per_unit(t_props *props)
 {
 	int	pixels;
@@ -54,26 +48,34 @@ int	pixels_per_unit(t_props *props)
 	return (pixels);
 }
 
+void	init_props(char **argv, t_props *props)
+{
+	t_map	map;
+	t_map	color_map;
+
+	read_map(argv[1], &map);
+	read_map(argv[1], &color_map);
+	props->points = ft_calloc((map.rows * map.cols) + 1, sizeof(t_vec2));
+	init_matrix(argv[1], &map, 0);
+	init_matrix(argv[1], &color_map, 1);
+	props->map = map;
+	props->color_map = color_map;
+	props->scale = ft_atoi(SCALE) / 100.0;
+	props->rotation = ft_calloc(1, sizeof(t_vec3));
+	props->rotation->x = 54;
+	props->rotation->y = 0;
+	props->rotation->z = 45;
+}
+
 int	main(int argc, char **argv)
 {
-	t_map		map;
-	t_map		color_map;
 	t_props		props;
 
 	if (argc != 2)
 		handle_error("Example: ./fdf 42.fdf", "INVALID_INPUT");
-	read_map(argv[1], &map);
-	read_map(argv[1], &color_map);
-	props.points = ft_calloc((map.rows * map.cols) + 1, sizeof(t_vec2));
-	init_matrix(argv[1], &map, 0);
-	init_matrix(argv[1], &color_map, 1);
-	props.map = map;
-	props.color_map = color_map;
-	props.scale = ft_atoi(SCALE) / 100.0;
-	props.rotation = ft_calloc(1, sizeof(t_vec3));
-	props.rotation->x = 54;
-	props.rotation->y = 0;
-	props.rotation->z = 45;
+	if (ft_strncmp(ft_strchr(argv[1], '.'), ".fdf", 4))
+		handle_error("map must end with '.fdf\'", "INVALID_INPUT");
+	init_props(argv, &props);
 	init_window(&props);
 	handle_events(&props);
 	plot_vectors(&props);
