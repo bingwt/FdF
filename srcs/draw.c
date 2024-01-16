@@ -6,18 +6,18 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 06:49:31 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:38:26 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "fdf.h"
 
-static void	step_color(t_color *color, t_color *step)
-{
-	color->red += step->red;
-	color->green += step->green;
-	color->blue += step->blue;
-}
+// static void	step_color(t_color *color, t_color *step)
+// {
+// 	color->red += step->red;
+// 	color->green += step->green;
+// 	color->blue += step->blue;
+// }
 
 static void	check_slope(int *axis, int *iter)
 {

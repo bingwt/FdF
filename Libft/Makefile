@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 16:34:50 by btan              #+#    #+#              #
-#    Updated: 2024/01/10 12:24:27 by btan             ###   ########.fr        #
+#    Updated: 2024/01/16 08:18:48 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ SRCS =  ft_atoi.c \
 		ft_printf.c \
 		get_next_line.c \
 		free_strs.c \
+		ft_printf_fd.c \
+		handle_error.c \
 
 CC = cc
 

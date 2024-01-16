@@ -6,22 +6,20 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 06:35:55 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:37:26 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "fdf.h"
 
 void	read_map(char *file, t_map *map)
 {
 	int		fd;
-	int		i;
 	char	*line;
 
 	fd = open(file, O_RDONLY);
 	(*map).rows = 0;
 	map->cols = 0;
-	i = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -46,7 +44,10 @@ static int	*init_row(char *line, t_map *map)
 	z = ft_split(line, ' ');
 	i = 0;
 	while (i < map->cols)
-		row[i++] = ft_atoi(z[i]);
+	{
+		row[i] = ft_atoi(z[i]);
+		i++;
+	}
 	free_strs(z);
 	return (row);
 }
@@ -65,9 +66,10 @@ static int	*init_colors(char *line, t_map *map)
 	while (i < map->cols)
 	{
 		if (ft_strchr(split[i], ','))
-			colors[i++] = ft_atoi_base(ft_strchr(split[i], ',') + 3, base);
+			colors[i] = ft_atoi_base(ft_strchr(split[i], ',') + 3, base);
 		else
-			colors[i++] = 0xFFFFFF;
+			colors[i] = 0xFFFFFF;
+		i++;
 	}
 	free_strs(split);
 	return (colors);

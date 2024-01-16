@@ -6,35 +6,48 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2024/01/16 06:31:52 by btan             ###   ########.fr        #
+#    Updated: 2024/01/16 08:03:24 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf.a
+NAME = fdf
 
-SRCS = 
+INCLUDES = includes
+
+SRCS = srcs/main.c \
+		srcs/fdf_utils.c \
+		srcs/matrix_math.c \
+		srcs/normalize.c \
+		srcs/transform.c \
+		srcs/map.c \
+		srcs/pixel.c \
+		srcs/vectors.c \
+		srcs/connect.c \
+		srcs/draw.c \
+		srcs/events.c
 
 CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-MLXFLAGS = -lmlx -lXext -lX11
+MLXFLAGS = -lXext -lX11
 
 OBJECTS = $(SRCS:.c=.o)
 
-all: $(NAME) 
+all: $(NAME)
 
-#.c.o:
-#	$(CC) -c $< -o $(<:.c=.o)
-%.o: %.c
-	$(CC) $(CFLAGS) $(MLXFLAGS) -c $< -o $@
-
-$(NAME): $(OBJECTS)
+$(NAME):
 	make -C Libft
-	ar -rc $(NAME) $(OBJECTS)
+	mv ./Libft/libft.a ./
+	make fclean -C Libft
+	make -C mlx
+	mv ./mlx/libmlx_Linux.a ./mlx.a
+	make clean -C mlx
+	# ar -rc $(NAME).a $(OBJECTS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -I$(INCLUDES) -ILibft -Imlx libft.a mlx.a -lm -lXext -lX11
 
 clean:
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJECTS) $(NAME).a libft.a mlx.a
 
 fclean: clean
 	rm -rf $(NAME)

@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:36:30 by btan              #+#    #+#             */
-/*   Updated: 2024/01/10 12:24:14 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 08:18:12 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int		ft_printf(const char *str, ...);
 char	*get_next_line(int fd);
 void	free_strs(char **strs);
+int		ft_printf_fd(int fd, const char *str, ...);
+int		handle_error(char *vars, char *error);
 
 #endif

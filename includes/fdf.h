@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 06:48:05 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 08:08:57 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # endif
 
 # ifndef SCALE
-#  define SCALE 0.8
+#  define SCALE "75"
 # endif
 
 typedef struct s_vec2
@@ -116,7 +116,7 @@ void	ft_swap(float *a, float *b);
 int		ft_atoi_base(const char *str, const char *base);
 
 void	set_local_origin(t_props *props, t_vec3 **vec3);
-void	set_world_origin(t_props *props, float ***matrix);
+void	set_world_origin(float ***matrix);
 
 float	**vec3_to_matrix(t_vec3 *vec);
 t_vec2	*matrix_to_vec2(float **matrix);
@@ -145,8 +145,8 @@ void	plot_vectors(t_props *props);
 void	connect_points(t_props *props);
 
 void	draw_bresenham(t_line *line, t_props *props);
-void    draw_background(t_props *props);
+void	draw_background(t_props *props);
 
-int		handle_events(t_props *props);
+void		handle_events(t_props *props);
 
 #endif

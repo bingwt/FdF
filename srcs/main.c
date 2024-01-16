@@ -6,11 +6,11 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 06:54:44 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 08:20:42 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "fdf.h"
 
 static void	init_window(t_props *props)
 {
@@ -60,6 +60,8 @@ int	main(int argc, char **argv)
 	t_map		color_map;
 	t_props		props;
 
+	if (argc != 2)
+		handle_error("Example: ./fdf 42.fdf", "INVALID_INPUT");
 	read_map(argv[1], &map);
 	read_map(argv[1], &color_map);
 	props.points = ft_calloc((map.rows * map.cols) + 1, sizeof(t_vec2));
@@ -67,15 +69,13 @@ int	main(int argc, char **argv)
 	init_matrix(argv[1], &color_map, 1);
 	props.map = map;
 	props.color_map = color_map;
-	props.scale = ft_atoi(argv[2]) / 100.0;
+	props.scale = ft_atoi(SCALE) / 100.0;
 	props.rotation = ft_calloc(1, sizeof(t_vec3));
-	props.rotation->x = ft_atoi(argv[3]);
-	props.rotation->y = ft_atoi(argv[4]);
-	props.rotation->z = ft_atoi(argv[5]);
+	props.rotation->x = 54;
+	props.rotation->y = 0;
+	props.rotation->z = 45;
 	init_window(&props);
 	handle_events(&props);
-	props.pixel.color = 0x333333;
-	draw_background(&props);
 	plot_vectors(&props);
 	connect_points(&props);
 	mlx_loop(props.mlx);

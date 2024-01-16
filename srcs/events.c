@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 06:52:36 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:39:21 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ static int	handle_close(t_props *props)
 
 static int	handle_keydown(int key, t_props *props)
 {
-	char	*image;
-	t_line	line;
-
 	printf("%d\n", key);
 	if (key == 65307)
 		handle_close(props);
@@ -63,7 +60,7 @@ static int	handle_keydown(int key, t_props *props)
 	return (0);
 }
 
-int	handle_events(t_props *props)
+void	handle_events(t_props *props)
 {
 	mlx_hook(props->window, 2, 1L << 0, handle_keydown, props);
 	mlx_hook(props->window, 17, 0L, handle_close, props);

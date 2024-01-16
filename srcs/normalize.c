@@ -6,11 +6,11 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 00:41:54 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:54:50 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:35:48 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "fdf.h"
 
 void	set_local_origin(t_props *props, t_vec3 **vec3)
 {
@@ -23,7 +23,7 @@ void	set_local_origin(t_props *props, t_vec3 **vec3)
 	(*vec3)->y -= offset_y;
 }
 
-void	set_world_origin(t_props *props, float ***matrix)
+void	set_world_origin(float ***matrix)
 {
 	int	offset_x;
 	int	offset_y;

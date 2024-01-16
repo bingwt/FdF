@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 23:11:57 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:08:52 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:35:24 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,17 @@ float	**matrix_mult(float **a, float **b)
 	matrix[0] = (float *)malloc(sizeof(float) * 1);
 	matrix[1] = (float *)malloc(sizeof(float) * 1);
 	matrix[2] = (float *)malloc(sizeof(float) * 1);
-	i = 0;
-	while (i < 3)
+	i = -1;
+	while (++i < 3)
 	{
-		j = 0;
-		while (j < 1)
+		j = -1;
+		while (++j < 1)
 		{
 			matrix[i][j] = 0;
-			k = 0;
-			while (k < 3)
-				matrix[i][j] += a[i][k] * b[k++][j];
-			j++;
+			k = -1;
+			while (++k < 3)
+				matrix[i][j] += a[i][k] * b[k][j];
 		}
-		i++;
 	}
 	return (matrix);
 }

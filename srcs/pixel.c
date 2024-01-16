@@ -6,11 +6,11 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:54:47 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 05:14:46 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:19:47 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "fdf.h"
 
 void	draw_pixel(int x, int y, t_props *props)
 {

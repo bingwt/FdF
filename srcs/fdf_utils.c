@@ -6,11 +6,11 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 11:01:57 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 06:39:35 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:19:34 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "fdf.h"
 
 int	is_sep(char const c, char sep)
 {

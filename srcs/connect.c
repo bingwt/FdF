@@ -6,11 +6,11 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 06:31:18 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 06:32:11 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 07:38:07 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fdf.h>
+#include "fdf.h"
 
 static void	connect_col(t_props *props, int row, int col)
 {
@@ -42,7 +42,6 @@ void	connect_points(t_props *props)
 {
 	int		row;
 	int		col;
-	t_line	line;
 
 	row = 0;
 	while (row < props->map.rows)
