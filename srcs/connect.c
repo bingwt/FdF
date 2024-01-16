@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 06:31:18 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 07:38:07 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 10:08:36 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static void	connect_col(t_props *props, int row, int col)
 	line.y1 = props->points[(row * props->map.cols) + col + 1]->y;
 	props->pixel.color = props->color_map.matrix[row][col];
 	props->pixel.next_color = props->color_map.matrix[row][col + 1];
+	props->pixel.step = ft_calloc(1, sizeof(t_color));
+	props->pixel.step = color_step(props->pixel.color, props->pixel.next_color, \
+	pixels_per_unit(props));
 	draw_bresenham(&line, props);
 }
 
@@ -35,6 +38,8 @@ static void	connect_row(t_props *props, int row, int col)
 	line.y1 = props->points[(row + 1) * props->map.cols + col]->y;
 	props->pixel.color = props->color_map.matrix[row][col];
 	props->pixel.next_color = props->color_map.matrix[row + 1][col];
+	props->pixel.step = color_step(props->pixel.color, props->pixel.next_color, \
+	pixels_per_unit(props));
 	draw_bresenham(&line, props);
 }
 

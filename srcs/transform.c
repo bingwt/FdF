@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 05:01:00 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 08:39:50 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 10:16:43 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	rotate_z(float ***matrix, float degrees)
 	float	**rotation;
 	float	**result;
 
-	angle = degrees * 3.14 / 180;
+	angle = degrees * (M_PI / 180);
 	rotation = ft_calloc(3, sizeof(int *));
 	rotation[0] = ft_calloc(3, sizeof(int));
 	rotation[1] = ft_calloc(3, sizeof(int));
@@ -64,7 +64,7 @@ void	rotate_x(float ***matrix, float degrees)
 	float	**rotation;
 	float	**result;
 
-	angle = degrees * 3.14 / 180;
+	angle = degrees * (M_PI / 180);
 	rotation = ft_calloc(3, sizeof(int *));
 	rotation[0] = ft_calloc(3, sizeof(int));
 	rotation[1] = ft_calloc(3, sizeof(int));
@@ -90,7 +90,7 @@ void	rotate_y(float ***matrix, float degrees)
 	float	**rotation;
 	float	**result;
 
-	angle = degrees * 3.14 / 180;
+	angle = degrees * (M_PI / 180);
 	rotation = ft_calloc(3, sizeof(int *));
 	rotation[0] = ft_calloc(3, sizeof(int));
 	rotation[1] = ft_calloc(3, sizeof(int));

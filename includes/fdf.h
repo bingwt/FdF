@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 08:35:31 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 10:06:05 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ typedef struct s_vec3
 
 typedef struct s_color
 {
-	int	red;
-	int	green;
-	int	blue;
+	float	red;
+	float	green;
+	float	blue;
 }	t_color;
 
 typedef struct s_pixel
@@ -128,7 +128,7 @@ void	draw_pixel(int x, int y, t_props *props);
 t_color	*hex_to_rgb(char *hex);
 t_color	*dec_to_rgb(int dec);
 int		rgb_to_dec(t_color *color);
-t_color	*color_step(t_color *color1, t_color *color2, int ppu);
+t_color	*color_step(int color1, int color2, int ppu);
 
 void	plot_vectors(t_props *props);
 void	connect_points(t_props *props);

@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 00:54:47 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 07:19:47 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 10:09:43 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,19 @@ int	rgb_to_dec(t_color *color)
 	return (dec);
 }
 
-t_color	*color_step(t_color *color1, t_color *color2, int ppu)
+t_color	*color_step(int color1, int color2, int ppu)
 {
+	t_color	*rgb1;
+	t_color	*rgb2;
 	t_color	*step;
 
-	if (!color1 || !color2)
-		return (0);
+	rgb1 = dec_to_rgb(color1);
+	rgb2 = dec_to_rgb(color2);
 	step = calloc(1, sizeof(t_color));
-	step->red = (color1->red - color2->red) % (ppu + 1);
-	step->green = (color1->green - color2->green) % (ppu + 1);
-	step->blue = (color1->blue - color2->blue) % (ppu + 1);
+	step->red = (rgb1->red - rgb2->red) / ppu;
+	step->green = (rgb1->green - rgb2->green) / ppu;
+	step->blue = (rgb1->blue - rgb2->blue) / ppu;
+	free(rgb1);
+	free(rgb2);
 	return (step);
 }

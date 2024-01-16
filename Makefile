@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2024/01/16 08:03:24 by btan             ###   ########.fr        #
+#    Updated: 2024/01/16 09:45:08 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS = srcs/main.c \
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 MLXFLAGS = -lXext -lX11
 

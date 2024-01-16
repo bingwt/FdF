@@ -6,18 +6,22 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 07:38:26 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 09:52:38 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// static void	step_color(t_color *color, t_color *step)
-// {
-// 	color->red += step->red;
-// 	color->green += step->green;
-// 	color->blue += step->blue;
-// }
+static void	step_color(t_props *props)
+{
+	t_color	*current_color;
+	current_color = dec_to_rgb(props->pixel.color);
+	current_color->red += props->pixel.step->red;
+	current_color->green += props->pixel.step->green;
+	current_color->blue += props->pixel.step->blue;
+	props->pixel.color = rgb_to_dec(current_color);
+	free(current_color);
+}
 
 static void	check_slope(int *axis, int *iter)
 {
@@ -43,6 +47,7 @@ static void	draw_bresenham_low(t_line *line, t_props *props)
 	y = line->y0;
 	while (line->x0 <= line->x1)
 	{
+		step_color(props);
 		draw_pixel(line->x0, y, props);
 		if (diff > 0)
 		{
@@ -69,6 +74,7 @@ static void	draw_bresenham_high(t_line *line, t_props *props)
 	x = line->x0;
 	while (line->y0 <= line->y1)
 	{
+		step_color(props);
 		draw_pixel(x, line->y0, props);
 		if (diff > 0)
 		{

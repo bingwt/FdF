@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 09:10:05 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 10:18:34 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	init_props(char **argv, t_props *props)
 	props->color_map = color_map;
 	props->scale = ft_atoi(SCALE) / 100.0;
 	props->rotation = ft_calloc(1, sizeof(t_vec3));
-	props->rotation->x = 54;
+	props->rotation->x = atan(sqrt(2)) * (180 / M_PI);
 	props->rotation->y = 0;
 	props->rotation->z = 45;
 }
