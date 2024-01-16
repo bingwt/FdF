@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 05:01:00 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 10:16:43 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 23:10:33 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ void	rotate_y(float ***matrix, float degrees)
 	*matrix = result;
 }
 
-void	rotate_xyz(float ***projection, t_vec3 **rotation)
+void	rotate_xyz(float ***projection, t_vec3 *rotation)
 {
-	rotate_z(projection, (*rotation)->z);
-	rotate_x(projection, (*rotation)->x);
-	rotate_y(projection, (*rotation)->y);
+	rotate_z(projection, rotation->z);
+	rotate_x(projection, rotation->x);
+	rotate_y(projection, rotation->y);
 }

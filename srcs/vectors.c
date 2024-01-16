@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 05:32:12 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 08:24:32 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 23:11:24 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	process_vector(t_props *props, int row, int col)
 	projection = ortho_projection(&matrix);
 	free_matrix(matrix);
 	free(vec3);
-	rotate_xyz(&projection, &props->rotation);
+	rotate_xyz(&projection, props->rotation);
+	translate(&projection, props->translation);
 	set_scale(&projection, pixels_per_unit(props) * props->scale);
 	set_world_origin(&projection);
 	props->points[(row * props->map.cols) + col] = matrix_to_vec2(projection);

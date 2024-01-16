@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2024/01/16 09:45:08 by btan             ###   ########.fr        #
+#    Updated: 2024/01/16 23:02:32 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS = srcs/main.c \
 		srcs/matrix_math.c \
 		srcs/normalize.c \
 		srcs/transform.c \
+		srcs/translate.c \
 		srcs/map.c \
 		srcs/pixel.c \
 		srcs/vectors.c \

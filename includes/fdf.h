@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 15:07:15 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 23:27:10 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_properties
 	t_vec3		*rotation;
 	char		axis;
 	int			axis_iter;
+	t_vec2		*translation;
 }	t_props;
 
 int		is_sep(char const c, char sep);
@@ -116,7 +117,11 @@ float	**orthographic(void);
 void	rotate_z(float ***matrix, float degrees);
 void	rotate_x(float ***matrix, float degrees);
 void	rotate_y(float ***matrix, float degrees);
-void	rotate_xyz(float ***projection, t_vec3 **rotation);
+void	rotate_xyz(float ***projection, t_vec3 *rotation);
+
+void	translate(float ***projection, t_vec2 *translation);
+void	handle_zoom(t_props *props, int key);
+void	handle_translation(t_props *props, int key);
 
 int		pixels_per_unit(t_props *props);
 void	set_scale(float ***matrix, float scale);

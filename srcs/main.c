@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 13:13:53 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 23:20:25 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	init_props(char **argv, t_props *props)
 	props->rotation->x = atan(sqrt(2)) * (180 / M_PI);
 	props->rotation->y = 0;
 	props->rotation->z = 45;
+	props->translation = ft_calloc(1, sizeof(t_vec2));
 }
 
 int	main(int argc, char **argv)
