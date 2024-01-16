@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 13:06:57 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 15:07:15 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef struct s_properties
 	t_vec2		**points;
 	float		scale;
 	t_vec3		*rotation;
+	char		axis;
+	int			axis_iter;
 }	t_props;
 
 int		is_sep(char const c, char sep);
