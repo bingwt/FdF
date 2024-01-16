@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 18:51:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 09:52:38 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 10:21:03 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	step_color(t_props *props)
 {
 	t_color	*current_color;
+
 	current_color = dec_to_rgb(props->pixel.color);
 	current_color->red += props->pixel.step->red;
 	current_color->green += props->pixel.step->green;
