@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:09:20 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 08:46:18 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 13:03:19 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	read_map(char *file, t_map *map)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		handle_error(file, "NO_FILE");
+	if (ft_strncmp(ft_strchr(file, '.'), ".fdf", 4))
+		handle_error("map must end with '.fdf'", "INVALID_INPUT");
 	(*map).rows = 0;
 	map->cols = 0;
 	line = get_next_line(fd);

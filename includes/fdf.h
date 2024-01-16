@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:38 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 10:06:05 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/16 13:06:57 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <libft.h>
 # include <fcntl.h>
 # include <math.h>
-
-// # define ABS(Value) (Value < 0 ?  -Value : Value)
 
 # ifndef WIDTH
 #  define WIDTH 1024
