@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 23:27:36 by btan             ###   ########.fr       */
+/*   Updated: 2024/01/17 10:53:52 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,17 @@ void	handle_help(t_props *props)
 void	handle_rotation(t_props *props, int key)
 {
 	props->axis_iter = 1;
-	if (key == 65361)
+	if (key == 113)
+		props->rotation->z += props->axis_iter;
+	if (key == 101)
+		props->rotation->z -= props->axis_iter;
+	if (key == 44)
+		props->rotation->x += props->axis_iter;
+	if (key == 46)
+		props->rotation->x -= props->axis_iter;
+	if (key == 91)
 		props->rotation->y += props->axis_iter;
-	if (key == 65363)
+	if (key == 93)
 		props->rotation->y -= props->axis_iter;
 	mlx_destroy_image(props->mlx, props->image);
 	props->image = mlx_new_image(props->mlx, props->width, props->height);
@@ -67,7 +75,8 @@ static int	handle_keydown(int key, t_props *props)
 	printf("%d\n", key);
 	if (key == 65307)
 		handle_close(props);
-	if (key == 65361 || key == 65363)
+	if (key == 113 || key == 101 || key == 44 || key == 46 || \
+	key == 91 || key == 93)
 		handle_rotation(props, key);
 	if (key == 65362 || key == 65364)
 		handle_zoom(props, key);
