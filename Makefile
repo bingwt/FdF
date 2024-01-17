@@ -6,7 +6,7 @@
 #    By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/11 15:06:39 by btan              #+#    #+#              #
-#    Updated: 2024/01/17 13:40:59 by btan             ###   ########.fr        #
+#    Updated: 2024/01/17 13:41:39 by btan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(NAME):
 	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -I$(INCLUDES) -ILibft -Imlx libft.a mlx.a -lm -lXext -lX11
 
 clean:
-	rm -rf $(OBJECTS) $(NAME).a libft.a mlx.a
+	rm -rf $(OBJECTS) $(NAME).a libft.a
 
 fclean: clean
 	rm -rf $(NAME)
