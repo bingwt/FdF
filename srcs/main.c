@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:58:43 by btan              #+#    #+#             */
-/*   Updated: 2024/01/16 23:20:25 by btan             ###   ########.fr       */
+/*   Updated: 2024/11/08 05:09:17 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,13 @@ void	init_props(char **argv, t_props *props)
 	props->translation = ft_calloc(1, sizeof(t_vec2));
 }
 
+void	loop(t_props *props)
+{
+	// draw_background(props);
+	plot_vectors(props);
+	connect_points(props);
+}
+
 int	main(int argc, char **argv)
 {
 	t_props		props;
@@ -79,9 +86,7 @@ int	main(int argc, char **argv)
 	init_window(&props);
 	handle_events(&props);
 	props.pixel.color = 0x333333;
-	draw_background(&props);
-	plot_vectors(&props);
-	connect_points(&props);
+	mlx_loop_hook(props.mlx, (void *) loop, &props);
 	mlx_loop(props.mlx);
 	return (0);
 }
