@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/01/17 10:53:52 by btan             ###   ########.fr       */
+/*   Updated: 2024/11/08 05:05:18 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	handle_rotation(t_props *props, int key)
 static int	handle_keydown(int key, t_props *props)
 
 {
-	printf("%d\n", key);
+	ft_printf("%d\n", key);
 	if (key == 65307)
 		handle_close(props);
 	if (key == 113 || key == 101 || key == 44 || key == 46 || \
