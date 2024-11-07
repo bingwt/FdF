@@ -6,7 +6,7 @@
 /*   By: btan <btan@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 19:15:56 by btan              #+#    #+#             */
-/*   Updated: 2024/11/08 05:05:18 by btan             ###   ########.fr       */
+/*   Updated: 2024/11/08 05:20:40 by btan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,20 @@ void	handle_help(t_props *props)
 void	handle_rotation(t_props *props, int key)
 {
 	props->axis_iter = 1;
+	props->pixel.color = 0x000000;
+	draw_background(props);
 	if (key == 113)
 		props->rotation->z += props->axis_iter;
-	if (key == 101)
+	else if (key == 101)
 		props->rotation->z -= props->axis_iter;
-	if (key == 44)
+	else if (key == 44)
 		props->rotation->x += props->axis_iter;
-	if (key == 46)
+	else if (key == 46)
 		props->rotation->x -= props->axis_iter;
-	if (key == 91)
+	else if (key == 91)
 		props->rotation->y += props->axis_iter;
-	if (key == 93)
+	else if (key == 93)
 		props->rotation->y -= props->axis_iter;
-	mlx_destroy_image(props->mlx, props->image);
-	props->image = mlx_new_image(props->mlx, props->width, props->height);
-	plot_vectors(props);
-	connect_points(props);
-	mlx_put_image_to_window(props->mlx, props->window, props->image, 0, 0);
 }
 
 static int	handle_keydown(int key, t_props *props)
@@ -94,8 +91,25 @@ static int	handle_keydown(int key, t_props *props)
 	return (0);
 }
 
+int	handle_mouse(int x, int y, t_props *props)
+{
+	(void) props;
+	(void) y;
+	// ft_printf("x: %d, y: %d", x, y);
+	props->pixel.color = 0x000000;
+	draw_background(props);
+	props->pixel.color = 0xffffff;
+	if (x < WIDTH)
+		props->rotation->z += props->axis_iter;
+	if (x > WIDTH)
+		props->rotation->z -= props->axis_iter;
+
+	return (0);
+}
+
 void	handle_events(t_props *props)
 {
 	mlx_hook(props->window, 2, 1L << 0, handle_keydown, props);
 	mlx_hook(props->window, 17, 0L, handle_close, props);
+	mlx_hook(props->window, 6, 1L << 6, handle_mouse, props);
 }
